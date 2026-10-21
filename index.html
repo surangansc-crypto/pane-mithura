@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>පුංචි පෑනේ මිතුරා | Little AI Pen Pal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Noto+Sans+Sinhala:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: 'Fredoka', 'Noto Sans Sinhala', sans-serif;
+      background: radial-gradient(circle at top right, #e0f2fe, #fef3c7, #fce7f3);
+      min-height: 100vh;
+    }
+    .letter-paper {
+      background: #fefdf8;
+      background-image: 
+        radial-gradient(#e2e8f0 1px, transparent 0),
+        linear-gradient(to bottom, transparent 31px, #e2e8f0 32px);
+      background-size: 20px 20px, 100% 32px;
+      line-height: 32px;
+    }
+    .airmail-border {
+      background: repeating-linear-gradient(
+        -45deg,
+        #ef4444,
+        #ef4444 14px,
+        #ffffff 14px,
+        #ffffff 28px,
+        #3b82f6 28px,
+        #3b82f6 42px,
+        #ffffff 42px,
+        #ffffff 56px
+      );
+    }
+  </style>
+</head>
+<body class="p-3 sm:p-6 text-slate-800">
+
+  <!-- Header -->
+  <header class="max-w-4xl mx-auto flex justify-between items-center bg-white/80 backdrop-blur-md px-5 py-3 rounded-2xl shadow-sm border border-white mb-6">
+    <div class="flex items-center gap-3">
+      <div class="w-11 h-11 bg-amber-400 text-white rounded-2xl flex items-center justify-center shadow-md text-2xl font-bold">
+        💌
+      </div>
+      <div>
+        <h1 class="text-xl sm:text-2xl font-bold text-amber-600 leading-tight">පුංචි පෑනේ මිතුරා</h1>
+        <p class="text-xs text-slate-500 font-medium">Safe AI Pen Pal for Kids</p>
+      </div>
+    </div>
+    <div id="trialBadgeContainer" class="text-xs bg-amber-100 text-amber-800 px-3 py-1.5 rounded-xl font-semibold flex items-center gap-1.5">
+      <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+      <span id="trialCountdownText">නොමිලේ අත්හදා බැලීම</span>
+    </div>
+  </header>
+
+  <!-- Main Grid -->
+  <main class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <!-- Profile & Photo Converter Column -->
+    <div class="bg-white/90 backdrop-blur rounded-3xl p-5 shadow-lg border border-amber-100 flex flex-col justify-between">
+      <div>
+        <h2 class="text-lg font-bold text-slate-700 mb-3 flex items-center gap-2">
+          <span>🎨</span> මගේ කාටූන් පැතිකඩ
+        </h2>
+
+        <!-- Cartoon Avatar Display & Photo Input -->
+        <div class="mb-4 text-center">
+          <div class="relative inline-block">
+            <div id="cartoonAvatarBox" class="w-24 h-24 rounded-full border-4 border-amber-400 bg-amber-50 shadow-md mx-auto overflow-hidden flex items-center justify-center">
+              <img id="avatarImg" src="https://api.dicebear.com/7.x/bottts/svg?seed=Lucky" alt="Cartoon Avatar" class="w-full h-full object-cover">
+            </div>
+            <label for="photoUpload" class="absolute bottom-0 right-0 bg-amber-500 hover:bg-amber-600 text-white p-2 rounded-full shadow-lg cursor-pointer transition transform active:scale-95" title="ඔයාගේ ෆොටෝ එකක් දාන්න">
+              <i data-lucide="camera" class="w-4 h-4"></i>
+            </label>
+            <input type="file" id="photoUpload" accept="image/*" class="hidden" onchange="convertPhotoToCartoon(event)">
+          </div>
+          <p class="text-[11px] text-slate-400 mt-2">ෆොටෝ එක දැමූ පසු එය කාටූන් එකක් ලෙස මෙහි දිස්වේ (සැබෑ රූපය සුරැකෙන්නේ නැත 🔒)</p>
+        </div>
+
+        <!-- Name -->
+        <div class="mb-3">
+          <label class="block text-xs font-semibold text-slate-500 mb-1">ඔයාගේ නම:</label>
+          <input type="text" id="childName" placeholder="උදා: සෙනුරි / තිසර" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-slate-50">
+        </div>
+
+        <!-- Gender -->
+        <div class="mb-3">
+          <label class="block text-xs font-semibold text-slate-500 mb-1">ස්ත්‍රී / පුරුෂ භාවය:</label>
+          <select id="childGender" onchange="refreshAvatarStyle()" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-slate-50">
+            <option value="දුවක්">දුවක් (Girl)</option>
+            <option value="පුතෙක්">පුතෙක් (Boy)</option>
+          </select>
+        </div>
+
+        <!-- Age Group -->
+        <div class="mb-3">
+          <label class="block text-xs font-semibold text-slate-500 mb-1">වයස් කාණ්ඩය:</label>
+          <select id="childAge" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-slate-50">
+            <option value="අවුරුදු 5 - 8">අවුරුදු 5 - 8 (කුඩා වයස)</option>
+            <option value="අවුරුදු 9 - 12" selected>අවුරුදු 9 - 12 (පාසල් විය)</option>
+            <option value="අවුරුදු 13 - 16">අවුරුදු 13 - 16 (යොවුන් විය)</option>
+          </select>
+        </div>
+
+        <!-- Selected Topic Dropdown -->
+        <div class="mb-3">
+          <label class="block text-xs font-semibold text-slate-500 mb-1">කතා කරන මාතෘකාව:</label>
+          <select id="selectedTopic" onchange="onTopicSelectChange()" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-slate-50">
+          </select>
+        </div>
+
+        <!-- Interests -->
+        <div class="mb-4">
+          <label class="block text-xs font-semibold text-slate-500 mb-1">විනෝදාංශ:</label>
+          <input type="text" id="childInterests" placeholder="උදා: චිත්‍ර, පාපන්දු, සංගීතය" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-slate-50">
+        </div>
+      </div>
+
+      <div class="bg-amber-50 p-3 rounded-2xl border border-amber-200 text-xs text-amber-800">
+        🛡️ <b>ආරක්ෂිත පරිසරය:</b> දරුවාගේ පෞද්ගලිකත්වය 100% ක් සුරැකෙන අතර සුහදශීලී අදහස් පමණක් හුවමාරු වේ.
+      </div>
+    </div>
+
+    <!-- Letter Writing & Output Column -->
+    <div class="md:col-span-2 space-y-5">
+
+      <div class="bg-white rounded-3xl p-5 shadow-lg border border-slate-100">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
+            <span>✍️</span> පෑනේ මිතුරාට ලියන්න
+          </h2>
+          <span class="text-xs text-slate-400">මාතෘකාවක් තෝරා ආරම්භ කරන්න</span>
+        </div>
+
+        <textarea id="letterInput" rows="4" placeholder="ආයුබෝවන් මිතුරේ, අද මම ඔයාට කියන්න හදන්නේ..." class="w-full p-4 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm leading-relaxed bg-amber-50/20"></textarea>
+
+        <!-- Topic Badges -->
+        <div id="quickBadgesContainer" class="flex flex-wrap gap-1.5 my-3"></div>
+
+        <div class="flex justify-end items-center gap-3">
+          <button id="sendBtn" onclick="sendLetter()" class="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold rounded-2xl shadow-md transition transform active:scale-95 text-sm">
+            <span>ලියුම යවන්න</span>
+            <i data-lucide="send" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Letter Display -->
+      <div id="replySection" class="hidden">
+        <div class="p-2 airmail-border rounded-3xl shadow-xl">
+          <div class="bg-white rounded-2xl p-6 relative letter-paper">
+            <div class="flex justify-between items-start mb-4 border-b pb-3">
+              <div>
+                <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full mb-1">PAR AVION / AIR MAIL</span>
+                <h3 id="replyTitle" class="text-base font-bold text-slate-800">මිතුරාගේ පිළිතුර</h3>
+                <p id="replyMeta" class="text-xs text-slate-400"></p>
+              </div>
+              <div class="w-16 h-20 border-2 border-dashed border-red-400 bg-red-50 rounded flex flex-col items-center justify-center p-1 text-center shadow-inner">
+                <span class="text-2xl">🕊️</span>
+                <span class="text-[9px] font-bold text-red-600 uppercase mt-0.5">SRI LANKA</span>
+                <span class="text-[8px] text-slate-500">POST 2026</span>
+              </div>
+            </div>
+
+            <div id="replyContent" class="text-slate-800 text-sm whitespace-pre-line min-h-[140px] pt-1"></div>
+
+            <div class="mt-6 pt-3 border-t flex items-center justify-between">
+              <button onclick="readAloud()" class="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl text-xs font-semibold transition">
+                <i data-lucide="volume-2" class="w-4 h-4"></i>
+                <span>කියවා අසන්න</span>
+              </button>
+              <button onclick="window.print()" class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-semibold transition">
+                <i data-lucide="printer" class="w-4 h-4"></i>
+                <span>මුද්‍රණය කරන්න (Print)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div id="loadingState" class="hidden text-center py-10">
+        <div class="inline-block animate-bounce text-4xl mb-2">🕊️</div>
+        <p class="text-sm font-semibold text-amber-700">ලියුම පෑනේ මිතුරා වෙත රැගෙන යමින් පවතී...</p>
+        <p class="text-xs text-slate-400 mt-1">මිතුරා පිළිතුරක් ලියමින් සිටියි, මොහොතක් රැඳෙන්න!</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Payment Modal -->
+  <div id="paymentModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl border border-red-100 text-center">
+      <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3 text-3xl">⌛</div>
+      <h3 class="text-lg font-bold text-slate-800 mb-2">නොමිලේ අත්හදා බැලීමේ කාලය අවසන් විය</h3>
+      <div id="paymentNoticeContent" class="text-xs text-slate-600 mb-4 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left whitespace-pre-line leading-relaxed"></div>
+      <p class="text-xs text-slate-400 mb-4">සේවාව දිගටම ලබා ගැනීමට ඇඩ්මින් සම්බන්ධ කරගන්න.</p>
+    </div>
+  </div>
+
+  <!-- Blocked User Notice Modal -->
+  <div id="blockedModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-red-200 text-center">
+      <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3 text-3xl">🚫</div>
+      <h3 class="text-lg font-bold text-red-600 mb-2">පරිශීලකයා අවහිර කර ඇත (Blocked)</h3>
+      <p class="text-xs text-slate-600 leading-relaxed">නුසුදුසු අන්තර්ගතයන් හෝ නීති රීති උල්ලංඝනය කිරීම හේතුවෙන් ඔබේ ගිණුම ඇඩ්මින් විසින් අත්හිටුවා ඇත.</p>
+    </div>
+  </div>
+
+  <!-- Hidden Admin Icon -->
+  <button onclick="promptAdminLogin()" title="Admin Control" class="fixed bottom-3 right-3 w-8 h-8 rounded-full bg-slate-300/40 hover:bg-slate-500/70 text-slate-600 hover:text-white flex items-center justify-center transition backdrop-blur-sm opacity-30 hover:opacity-100">
+    <i data-lucide="lock" class="w-4 h-4"></i>
+  </button>
+
+  <!-- Admin Modal -->
+  <div id="adminModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl p-6 max-w-2xl w-full shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+      
+      <div class="flex justify-between items-center border-b pb-3 mb-4">
+        <div>
+          <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+            <span>⚙️</span> ඇඩ්මින් පාලක පුවරුව
+          </h2>
+          <p class="text-xs text-slate-500">පද්ධතියේ සැකසුම් සහ පරිශීලක පාලනය</p>
+        </div>
+        <button onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Stats Bar -->
+      <div class="grid grid-cols-2 gap-3 mb-5">
+        <div class="bg-blue-50 border border-blue-200 p-3 rounded-2xl">
+          <span class="text-xs text-blue-600 font-semibold block">ලියාපදිංචි ළමුන් ගණන</span>
+          <span id="adminKidCount" class="text-2xl font-bold text-blue-900">0</span>
+        </div>
+        <div class="bg-red-50 border border-red-200 p-3 rounded-2xl">
+          <span class="text-xs text-red-600 font-semibold block">බ්ලොක් කළ අය ගණන</span>
+          <span id="adminBlockedCount" class="text-2xl font-bold text-red-900">0</span>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        
+        <!-- API Key Setup -->
+        <div class="border rounded-2xl p-4 bg-slate-50">
+          <label class="block font-bold text-slate-700 mb-1">Gemini API Key එක:</label>
+          <input type="password" id="adminApiKeyInput" placeholder="AIzaSy..." class="w-full p-2.5 rounded-xl border border-slate-300 font-mono text-xs bg-white">
+        </div>
+
+        <!-- Topics Manager -->
+        <div class="border rounded-2xl p-4 bg-slate-50">
+          <label class="block font-bold text-slate-700 mb-1">මාතෘකා කළමනාකරණය (කොමාවලින් වෙන්කරන්න):</label>
+          <textarea id="adminTopicsInput" rows="2" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs bg-white"></textarea>
+        </div>
+
+        <!-- Payment Notice -->
+        <div class="border rounded-2xl p-4 bg-slate-50">
+          <label class="block font-bold text-slate-700 mb-1">ගෙවීම් සහ බැංකු ගිණුම් විස්තරය:</label>
+          <textarea id="adminPaymentNoticeInput" rows="3" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs bg-white"></textarea>
+        </div>
+
+        <!-- Registered Kids and Block / Unblock List -->
+        <div class="border rounded-2xl p-4 bg-slate-50">
+          <div class="flex justify-between items-center mb-2">
+            <label class="block font-bold text-slate-700">ලියාපදිංචි ළමුන් සහ බ්ලොක් කිරීම්:</label>
+            <button onclick="clearKidsHistory()" class="text-red-500 text-[11px] hover:underline">ලැයිස්තුව මකන්න</button>
+          </div>
+          <div id="adminKidsTable" class="max-h-48 overflow-y-auto bg-white rounded-xl border p-2 text-[11px] space-y-2">
+            <!-- Dynamic Users -->
+          </div>
+        </div>
+
+        <!-- Change Admin Password -->
+        <div class="border rounded-2xl p-4 bg-slate-50">
+          <label class="block font-bold text-slate-700 mb-1">නව ඇඩ්මින් මුරපදයක්:</label>
+          <input type="password" id="adminNewPassInput" placeholder="වෙනස් කිරීමට අවශ්‍ය නම් පමණක් ඇතුළත් කරන්න" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs bg-white">
+        </div>
+
+      </div>
+
+      <div class="mt-5 pt-3 border-t flex justify-end gap-2">
+        <button onclick="closeAdminModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-semibold text-xs">වසන්න</button>
+        <button onclick="saveAdminSettings()" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-bold text-xs">සුරකින්න</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Default system configurations
+    const DEFAULT_CONFIG = {
+      adminPass: "admin123",
+      apiKey: "",
+      topics: [
+        "පාසලේ කරපු හොඳ වැඩක් ගැන",
+        "මගේ සුරතල් සතා ගැන",
+        "මම ආසම ක්‍රීඩාව ගැන",
+        "මම ඇඳපු අලුත් චිත්‍රයක් ගැන",
+        "මම ගිය ලස්සන චාරිකාවක් ගැන"
+      ],
+      paymentNotice: "ඔබගේ නොමිලේ අත්හදා බැලීමේ දින 1ක කාලය අවසන් වී ඇත.\n\nසේවාව දිගටම ලබා ගැනීමට පහත ගිණුමට මුදල් බැර කර WhatsApp පණිවිඩයක් එවන්න:\n\nබැංකුව: Commercial Bank\nගිණුම් අංකය: 1234567890\nනම: Admin\nWhatsApp: 07X XXXXXXX"
+    };
+
+    let appConfig = JSON.parse(localStorage.getItem('penpal_admin_config')) || DEFAULT_CONFIG;
+    let registeredKids = JSON.parse(localStorage.getItem('penpal_registered_kids')) || [];
+    let blockedUsers = JSON.parse(localStorage.getItem('penpal_blocked_users')) || [];
+
+    // Filter inappropriate words
+    const BAD_WORDS = ["හුත්ත", "පක", "කැරියා", "වේසි", "හුක", "fuck", "bitch", "asshole", "kill", "die", "sex", "porn"];
+
+    function containsBadWords(text) {
+      const lower = text.toLowerCase();
+      return BAD_WORDS.some(w => lower.includes(w));
+    }
+
+    // Cartoon generation from photo
+    function convertPhotoToCartoon(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      // Extract a unique hash/seed from file details so it stays consistent
+      const seed = Math.abs(file.name.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0));
+      const gender = document.getElementById('childGender').value;
+      const avatarStyle = gender === 'දුවක්' ? 'lorelei' : 'adventurer';
+
+      // Instantly generate a matching high-quality vector cartoon avatar
+      const cartoonUrl = `https://api.dicebear.com/7.x/${avatarStyle}/svg?seed=${seed}&radius=50&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`;
+
+      document.getElementById('avatarImg').src = cartoonUrl;
+      localStorage.setItem('penpal_avatar_url', cartoonUrl);
+      alert("ඔබගේ ඡායාරූපය සාර්ථකව කාටූන් අවතාරයක් බවට පත් කරන ලදී! සැබෑ ඡායාරූපය ප්‍රදර්ශනය නොවේ.");
+    }
+
+    function refreshAvatarStyle() {
+      if (!localStorage.getItem('penpal_avatar_url')) {
+        const gender = document.getElementById('childGender').value;
+        const style = gender === 'දුවක්' ? 'lorelei' : 'adventurer';
+        const url = `https://api.dicebear.com/7.x/${style}/svg?seed=Kid${Math.floor(Math.random()*100)}&radius=50`;
+        document.getElementById('avatarImg').src = url;
+      }
+    }
+
+    // Check user block status
+    function checkBlockStatus() {
+      const isBlocked = localStorage.getItem('penpal_device_blocked') === 'true';
+      if (isBlocked) {
+        document.getElementById('blockedModal').classList.remove('hidden');
+        return true;
+      }
+      return false;
+    }
+
+    // Trial status check
+    function checkTrialStatus() {
+      if (checkBlockStatus()) return false;
+
+      let firstVisit = localStorage.getItem('penpal_first_visit');
+      if (!firstVisit) {
+        firstVisit = Date.now().toString();
+        localStorage.setItem('penpal_first_visit', firstVisit);
+      }
+
+      const elapsedMs = Date.now() - parseInt(firstVisit);
+      const oneDayMs = 24 * 60 * 60 * 1000;
+
+      if (elapsedMs > oneDayMs) {
+        document.getElementById('paymentNoticeContent').innerText = appConfig.paymentNotice;
+        document.getElementById('paymentModal').classList.remove('hidden');
+        document.getElementById('trialBadgeContainer').innerHTML = `<span class="text-red-600">කාලය අවසන් විය ❌</span>`;
+        return false;
+      } else {
+        const remainingHours = Math.ceil((oneDayMs - elapsedMs) / (1000 * 60 * 60));
+        document.getElementById('trialCountdownText').innerText = `නොමිලේ අත්හදා බැලීම: තව පැය ${remainingHours}ක් ඇත`;
+        return true;
+      }
+    }
+
+    // Render topics
+    function renderTopics() {
+      const select = document.getElementById('selectedTopic');
+      const badgeContainer = document.getElementById('quickBadgesContainer');
+      select.innerHTML = '<option value="">-- මාතෘකාවක් තෝරන්න --</option>';
+      badgeContainer.innerHTML = '';
+
+      appConfig.topics.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.innerText = t;
+        select.appendChild(opt);
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'text-xs px-2.5 py-1 bg-slate-100 hover:bg-amber-100 rounded-full text-slate-600 transition';
+        btn.innerText = t;
+        btn.onclick = () => {
+          select.value = t;
+          setTopic(t);
+        };
+        badgeContainer.appendChild(btn);
+      });
+    }
+
+    function onTopicSelectChange() {
+      const val = document.getElementById('selectedTopic').value;
+      if (val) setTopic(val);
+    }
+
+    function setTopic(text) {
+      document.getElementById('letterInput').value = text + " ගැන ඔයාට කියන්නම්. ";
+      document.getElementById('letterInput').focus();
+    }
+
+    // Admin handlers
+    function promptAdminLogin() {
+      const pass = prompt("ඇඩ්මින් මුරපදය ඇතුළත් කරන්න:");
+      if (pass === appConfig.adminPass) {
+        openAdminModal();
+      } else if (pass !== null) {
+        alert("මුරපදය වැරදියි!");
+      }
+    }
+
+    function openAdminModal() {
+      document.getElementById('adminApiKeyInput').value = appConfig.apiKey || "";
+      document.getElementById('adminTopicsInput').value = appConfig.topics.join(', ');
+      document.getElementById('adminPaymentNoticeInput').value = appConfig.paymentNotice;
+      document.getElementById('adminKidCount').innerText = registeredKids.length;
+      document.getElementById('adminBlockedCount').innerText = blockedUsers.length;
+      renderKidsTable();
+      document.getElementById('adminModal').classList.remove('hidden');
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminModal').classList.add('hidden');
+    }
+
+    function renderKidsTable() {
+      const container = document.getElementById('adminKidsTable');
+      if (registeredKids.length === 0) {
+        container.innerHTML = '<p class="text-slate-400 italic">කිසිදු දරුවෙකු ලියාපදිංචි වී නොමැත.</p>';
+        return;
+      }
+      container.innerHTML = registeredKids.map((k, idx) => {
+        const isBlocked = blockedUsers.includes(k.name.toLowerCase());
+        return `
+          <div class="flex justify-between items-center border-b pb-1.5 pt-1">
+            <div>
+              <b>${idx + 1}. ${k.name}</b> (${k.gender}, ${k.age})
+              <div class="text-[10px] text-slate-400">අවසාන ලිපිය: "${k.lastSnippet || ''}"</div>
+            </div>
+            <div class="flex items-center gap-2">
+              ${isBlocked 
+                ? `<button onclick="unblockKid('${k.name}')" class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-[10px] font-bold">Unblock</button>` 
+                : `<button onclick="blockKid('${k.name}')" class="px-2 py-0.5 bg-red-100 text-red-700 rounded text-[10px] font-bold">Block පරිශීලකයා</button>`}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function blockKid(name) {
+      if (!blockedUsers.includes(name.toLowerCase())) {
+        blockedUsers.push(name.toLowerCase());
+        localStorage.setItem('penpal_blocked_users', JSON.stringify(blockedUsers));
+      }
+      // If current user matches
+      const currentName = document.getElementById('childName').value.trim().toLowerCase();
+      if (currentName === name.toLowerCase()) {
+        localStorage.setItem('penpal_device_blocked', 'true');
+      }
+      renderKidsTable();
+      document.getElementById('adminBlockedCount').innerText = blockedUsers.length;
+      alert(`${name} සාර්ථකව Block කරන ලදී!`);
+    }
+
+    function unblockKid(name) {
+      blockedUsers = blockedUsers.filter(u => u !== name.toLowerCase());
+      localStorage.setItem('penpal_blocked_users', JSON.stringify(blockedUsers));
+      localStorage.removeItem('penpal_device_blocked');
+      renderKidsTable();
+      document.getElementById('adminBlockedCount').innerText = blockedUsers.length;
+      alert(`${name} සාර්ථකව Unblock කරන ලදී!`);
+    }
+
+    function saveAdminSettings() {
+      const newKey = document.getElementById('adminApiKeyInput').value.trim();
+      const newTopicsRaw = document.getElementById('adminTopicsInput').value.trim();
+      const newNotice = document.getElementById('adminPaymentNoticeInput').value.trim();
+      const newPass = document.getElementById('adminNewPassInput').value.trim();
+
+      appConfig.apiKey = newKey;
+      if (newTopicsRaw) {
+        appConfig.topics = newTopicsRaw.split(',').map(t => t.trim()).filter(t => t.length > 0);
+      }
+      if (newNotice) appConfig.paymentNotice = newNotice;
+      if (newPass) appConfig.adminPass = newPass;
+
+      localStorage.setItem('penpal_admin_config', JSON.stringify(appConfig));
+      renderTopics();
+      alert("සියලු සැකසුම් සාර්ථකව සුරකින ලදී!");
+      closeAdminModal();
+    }
+
+    function clearKidsHistory() {
+      if (confirm("සියලුම ළමුන්ගේ දත්ත ලැයිස්තුව මකා දැමීමට අවශ්‍යද?")) {
+        registeredKids = [];
+        localStorage.removeItem('penpal_registered_kids');
+        renderKidsTable();
+        document.getElementById('adminKidCount').innerText = "0";
+      }
+    }
+
+    function recordKid(name, gender, age, interests, snippet) {
+      const existing = registeredKids.find(k => k.name.toLowerCase() === name.toLowerCase());
+      if (existing) {
+        existing.lastSnippet = snippet.substring(0, 30) + '...';
+      } else {
+        registeredKids.push({
+          name,
+          gender,
+          age,
+          interests,
+          lastSnippet: snippet.substring(0, 30) + '...',
+          date: new Date().toLocaleDateString('si-LK')
+        });
+      }
+      localStorage.setItem('penpal_registered_kids', JSON.stringify(registeredKids));
+    }
+
+    // Send Letter function
+    async function sendLetter() {
+      if (checkBlockStatus()) return;
+      if (!checkTrialStatus()) return;
+
+      const name = document.getElementById('childName').value.trim() || "මගේ පුංචි මිතුරා";
+      const gender = document.getElementById('childGender').value;
+      const ageGroup = document.getElementById('childAge').value;
+      const interests = document.getElementById('childInterests').value.trim() || "නොදනී";
+      const topic = document.getElementById('selectedTopic').value || "සාමාන්‍ය කතාබහ";
+      const letterText = document.getElementById('letterInput').value.trim();
+
+      // Check if user is blocked
+      if (blockedUsers.includes(name.toLowerCase())) {
+        localStorage.setItem('penpal_device_blocked', 'true');
+        checkBlockStatus();
+        return;
+      }
+
+      if (!letterText) {
+        alert("කරුණාකර මිතුරාට ලියුමක් ලියන්න!");
+        return;
+      }
+
+      // Check bad/inappropriate words
+      if (containsBadWords(letterText)) {
+        alert("⚠️ මිතුරන්ට නරක හෝ නුසුදුසු වචන භාවිතා කර ලියුම් එවන්න බැහැ. කරුණාකර ලස්සන වචනවලින් ලියන්න!");
+        return;
+      }
+
+      const apiKey = appConfig.apiKey;
+      if (!apiKey) {
+        alert("පද්ධතිය ක්‍රියාත්මක කිරීමට ඇඩ්මින් විසින් Gemini API Key එක ඇතුළත් කළ යුතුය. කරුණාකර ඇඩ්මින් සම්බන්ධ කරගන්න.");
+        return;
+      }
+
+      recordKid(name, gender, ageGroup, interests, letterText);
+
+      document.getElementById('loadingState').classList.remove('hidden');
+      document.getElementById('replySection').classList.add('hidden');
+      document.getElementById('sendBtn').disabled = true;
+
+      const systemPrompt = `You are a gentle, loving, and motivating AI Pen Pal for a child in Sri Lanka.
+Language: Pure, child-friendly, natural Sinhala (සිංහල).
+Child Details:
+- Name: ${name}
+- Gender: ${gender}
+- Age: ${ageGroup}
+- Topic: ${topic}
+- Interests: ${interests}
+
+Safety & Moderation:
+- Strictly child-safe, supportive, polite, and respectful.
+- If the child expresses sadness or fear, provide gentle comfort.
+- Never use harmful, aggressive, or adult phrasing.
+
+Letter Structure:
+- Salutation (e.g., ආදරණීය ${name},)
+- Reflect with warmth on their message.
+- Tell a tiny playful imaginative thought or uplifting thought.
+- Ask 1 curious and cheerful question.
+- Sign off warmly (e.g., ඔයාගේ ආදරණීය පෑනේ මිතුරා).`;
+
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              role: 'user',
+              parts: [
+                { text: systemPrompt },
+                { text: `දරුවා එවූ ලිපිය:\n"${letterText}"\n\nපෙරළා ලියුම ලියන්න:` }
+              ]
+            }],
+            generationConfig: { temperature: 0.7, maxOutputTokens: 600 }
+          })
+        });
+
+        const data = await response.json();
+        if (data.error) throw new Error(data.error.message || "API දෝෂයක් සිදු විය.");
+
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "සමාවෙන්න මිතුරේ, ලියුම ලැබීමේදී පොඩි ගැටලුවක් වුණා. නැවත උත්සාහ කරන්න!";
+
+        document.getElementById('replyTitle').innerText = `${name} වෙත පෑනේ මිතුරාගෙන්`;
+        document.getElementById('replyMeta').innerText = `${new Date().toLocaleDateString('si-LK')} • මාතෘකාව: ${topic}`;
+        document.getElementById('replyContent').innerText = reply;
+
+        document.getElementById('loadingState').classList.add('hidden');
+        document.getElementById('replySection').classList.remove('hidden');
+        document.getElementById('replySection').scrollIntoView({ behavior: 'smooth' });
+
+      } catch (err) {
+        console.error(err);
+        alert("දෝෂයක් සිදු විය: " + err.message + "\nAPI Key එක පරීක්ෂා කරන්න.");
+        document.getElementById('loadingState').classList.add('hidden');
+      } finally {
+        document.getElementById('sendBtn').disabled = false;
+      }
+    }
+
+    function readAloud() {
+      const text = document.getElementById('replyContent').innerText;
+      if (!text) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'si-LK';
+      utterance.rate = 0.9;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedAvatar = localStorage.getItem('penpal_avatar_url');
+      if (savedAvatar) {
+        document.getElementById('avatarImg').src = savedAvatar;
+      } else {
+        refreshAvatarStyle();
+      }
+      renderTopics();
+      checkTrialStatus();
+    });
+  </script>
+</body>
+</html>
