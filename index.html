@@ -2,357 +2,327 @@
 <html lang="si">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>පුංචි පෑනේ මිතුරා | 3D Smart Kid Pen Pal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>පුංචි පෑනේ මිතුරා | Kids AI Pen Pal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Noto+Sans+Sinhala:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+Sinhala:wght@500;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     body {
       font-family: 'Fredoka', 'Noto Sans Sinhala', sans-serif;
-      background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 45%, #fed6e3 100%);
+      background: radial-gradient(circle at top, #fef08a, #fed7aa, #bae6fd);
       min-height: 100vh;
-      overflow-x: hidden;
+      touch-action: manipulation;
     }
-    .bg-bubble {
-      position: fixed;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(5px);
-      z-index: -1;
-      animation: floatUp 15s infinite ease-in-out;
+    .kid-card {
+      border-radius: 28px;
+      box-shadow: 0 14px 0 #fb923c, 0 20px 25px rgba(0,0,0,0.1);
+      border: 4px solid #fff;
     }
-    @keyframes floatUp {
-      0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
-      50% { opacity: 0.8; }
-      100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+    .kid-btn {
+      box-shadow: 0 6px 0 #c2410c;
+      transition: all 0.1s ease-in-out;
     }
-    .letter-paper {
-      background: #fffdfa;
-      background-image: 
-        radial-gradient(#cbd5e1 1.2px, transparent 0),
-        linear-gradient(to bottom, transparent 31px, #e2e8f0 32px);
-      background-size: 20px 20px, 100% 32px;
-      line-height: 32px;
+    .kid-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #c2410c;
     }
-    .airmail-border {
-      background: repeating-linear-gradient(
-        -45deg,
-        #ff5376,
-        #ff5376 14px,
-        #ffffff 14px,
-        #ffffff 28px,
-        #38bdf8 28px,
-        #38bdf8 42px,
-        #ffffff 42px,
-        #ffffff 56px
-      );
-    }
-    .floating-card {
-      box-shadow: 0 16px 35px -8px rgba(125, 160, 250, 0.35);
+    .letter-box {
+      background: #fffdf5;
+      background-image: repeating-linear-gradient(transparent, transparent 31px, #fed7aa 31px, #fed7aa 33px);
+      line-height: 33px;
     }
   </style>
 </head>
-<body class="p-3 sm:p-6 text-slate-800 relative">
+<body class="p-3 sm:p-6 pb-20 select-none">
 
-  <div class="bg-bubble w-20 h-20 left-8" style="animation-delay: 0s;"></div>
-  <div class="bg-bubble w-32 h-32 left-1/3" style="animation-delay: 4s;"></div>
-  <div class="bg-bubble w-24 h-24 right-12" style="animation-delay: 2s;"></div>
-
-  <!-- Header -->
-  <header class="max-w-5xl mx-auto flex justify-between items-center bg-white/85 backdrop-blur-md px-5 py-3 rounded-3xl shadow-sm border border-white/70 mb-6">
-    <div class="flex items-center gap-3">
-      <div class="w-12 h-12 bg-gradient-to-tr from-amber-400 via-orange-400 to-pink-500 text-white rounded-2xl flex items-center justify-center shadow-lg text-2xl font-bold">
-        💌
-      </div>
-      <div>
-        <h1 class="text-xl sm:text-2xl font-black bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent leading-tight">පුංචි පෑනේ මිතුරා</h1>
-        <p class="text-xs text-slate-500 font-semibold">3D Kids Pen Pal & Safe Friendship Network 🎈</p>
-      </div>
+  <!-- Main App Header -->
+  <header class="max-w-2xl mx-auto text-center mb-5">
+    <div class="inline-flex items-center gap-2 bg-white px-5 py-2.5 rounded-full shadow-md border-2 border-amber-300 mb-2">
+      <span class="text-3xl animate-bounce">💌</span>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-orange-600">පුංචි පෑනේ මිතුරා</h1>
     </div>
-    <div id="trialBadgeContainer" class="text-xs bg-white/95 text-orange-700 px-3.5 py-1.5 rounded-2xl font-bold flex items-center gap-1.5 border border-orange-200 shadow-sm">
-      <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i>
-      <span id="trialCountdownText">නොමිලේ අත්හදා බැලීම සක්‍රියයි</span>
-    </div>
+    <p class="text-xs font-bold text-amber-900 bg-amber-200/60 inline-block px-3 py-1 rounded-full">
+      🎈 ළමයින්ගේ ආදරණීය 3D යාළුවා 🎈
+    </p>
   </header>
 
-  <!-- Navigation Tabs -->
-  <div class="max-w-5xl mx-auto flex gap-3 mb-6">
-    <button onclick="switchTab('penpal')" id="tabPenpalBtn" class="flex items-center gap-2 px-5 py-2.5 rounded-2xl font-bold text-xs bg-orange-500 text-white shadow-md transition">
-      <i data-lucide="pen-tool" class="w-4 h-4"></i>
-      <span>පෑනේ මිතුරාට ලියන්න & ප්‍රශ්න අසන්න</span>
-    </button>
-    <button onclick="switchTab('network')" id="tabNetworkBtn" class="flex items-center gap-2 px-5 py-2.5 rounded-2xl font-bold text-xs bg-white/80 hover:bg-white text-slate-700 shadow-sm transition">
-      <i data-lucide="users" class="w-4 h-4"></i>
-      <span>මිතුරු පුවරුව (Find Pen Pals)</span>
-    </button>
-  </div>
+  <!-- Single Easy-to-use Form Container -->
+  <main class="max-w-2xl mx-auto space-y-5">
 
-  <!-- Main View 1: Write to AI Pen Pal & Ask Questions -->
-  <main id="viewPenpal" class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Step 1: Profile & 3D Photo -->
+    <div class="bg-white/95 rounded-3xl p-5 kid-card">
+      <h2 class="text-base font-extrabold text-orange-500 mb-4 flex items-center gap-2">
+        <span>⭐</span> 1. මගේ විස්තර දාන්න
+      </h2>
 
-    <!-- Profile & Photo Converter Column -->
-    <div class="bg-white/90 backdrop-blur rounded-3xl p-5 floating-card border border-white/80 flex flex-col justify-between">
-      <div>
-        <h2 class="text-base font-bold text-slate-800 mb-3 flex items-center gap-2">
-          <span>🎨</span> මගේ 3D කාටූන් පැතිකඩ
-        </h2>
-
-        <!-- 3D Photo Render Box -->
-        <div class="mb-4 text-center">
-          <div class="relative inline-block">
-            <div id="cartoonCanvasWrapper" class="w-28 h-28 rounded-3xl border-4 border-amber-400 bg-amber-50 shadow-inner mx-auto overflow-hidden flex items-center justify-center relative">
-              <canvas id="photo3DCanvas" width="200" height="200" class="w-full h-full object-cover"></canvas>
-              <div id="avatarLoader" class="absolute inset-0 bg-white/80 backdrop-blur-sm hidden flex-col items-center justify-center text-[10px] font-bold text-orange-600">
-                <span class="animate-spin text-2xl mb-1">🪄</span>
-                <span>3D වෙමින් පවතී...</span>
-              </div>
-            </div>
-
-            <label for="photoUpload" class="absolute -bottom-1 -right-1 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white p-2.5 rounded-2xl shadow-xl cursor-pointer transition transform active:scale-95" title="ඔයාගේ ෆොටෝ එකක් දාන්න">
-              <i data-lucide="camera" class="w-4 h-4"></i>
-            </label>
-            <input type="file" id="photoUpload" accept="image/*" class="hidden" onchange="processRealPhotoTo3D(event)">
-          </div>
-          <p class="text-[10px] text-amber-800 font-semibold mt-2">📸 සැබෑ ෆොටෝ එකේ මුහුණුවර රැකෙන 3D කාටූන් රූපය</p>
+      <!-- 3D Photo Avatar Box -->
+      <div class="flex items-center gap-4 mb-4 bg-amber-50 p-3 rounded-2xl border-2 border-amber-200">
+        <div class="relative flex-shrink-0">
+          <canvas id="photoCanvas" width="90" height="90" class="w-20 h-20 rounded-2xl border-2 border-orange-400 bg-white shadow-inner"></canvas>
+          <label for="cameraFile" class="absolute -bottom-2 -right-2 bg-orange-500 text-white p-2 rounded-xl shadow cursor-pointer active:scale-90 transition">
+            <i data-lucide="camera" class="w-4 h-4"></i>
+          </label>
+          <input type="file" id="cameraFile" accept="image/*" class="hidden" onchange="loadPhoto(event)">
         </div>
-
-        <div class="space-y-2 text-xs">
-          <div>
-            <label class="block font-semibold text-slate-600 mb-0.5">ඔයාගේ නම:</label>
-            <input type="text" id="childName" placeholder="උදා: සෙනුරි / තිසර" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white/80">
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-600 mb-0.5">දෙමාපියන්ගේ WhatsApp අංකය:</label>
-            <input type="tel" id="childPhone" placeholder="07X XXXXXXX" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white/80 font-mono">
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block font-semibold text-slate-600 mb-0.5">ස්ත්‍රී / පුරුෂ:</label>
-              <select id="childGender" class="w-full px-2 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white/80">
-                <option value="දුවක්">දුවක්</option>
-                <option value="පුතෙක්">පුතෙක්</option>
-              </select>
-            </div>
-            <div>
-              <label class="block font-semibold text-slate-600 mb-0.5">වයස් කාණ්ඩය:</label>
-              <select id="childAge" class="w-full px-2 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white/80">
-                <option value="අවුරුදු 5 - 8">අවු 5 - 8</option>
-                <option value="අවුරුදු 9 - 12" selected>අවු 9 - 12</option>
-                <option value="අවුරුදු 13 - 16">අවු 13 - 16</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-600 mb-0.5">විනෝදාංශ:</label>
-            <input type="text" id="childInterests" placeholder="උදා: චිත්‍ර, පරිගණක, තාරකා විද්‍යාව" class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white/80">
-          </div>
+        <div class="text-left">
+          <p class="text-xs font-bold text-slate-700">📸 ඔයාගේ ෆොටෝ එකක් දාන්න</p>
+          <p class="text-[11px] text-slate-500 mt-0.5">එය මෙතැන ලස්සන 3D කාටූන් එකක් ලෙස පෙනේවි!</p>
         </div>
       </div>
 
-      <!-- Guidelines Box -->
-      <div class="bg-amber-50/90 p-3 rounded-2xl border border-amber-200 text-xs text-amber-900 mt-3">
-        <h4 class="font-bold mb-1 flex items-center gap-1">
-          <span>📜</span> නීති සහ මාර්ගෝපදේශ:
-        </h4>
-        <p id="publicGuidelines" class="text-[11px] leading-relaxed whitespace-pre-line text-slate-600"></p>
-      </div>
-
-      <!-- Owner Info -->
-      <div id="ownerSection" class="mt-3 pt-2.5 border-t border-slate-100 flex items-center gap-3">
-        <img id="ownerPhotoImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Owner" class="w-9 h-9 rounded-full border-2 border-orange-400 object-cover shadow-sm">
+      <!-- Inputs Grid -->
+      <div class="space-y-3 text-left">
         <div>
-          <span class="text-[9px] text-slate-400 font-semibold uppercase block">වෙබ් අඩවි නිර්මාතෘ</span>
-          <span id="ownerNameText" class="text-xs font-bold text-slate-700">පෑනේ මිතුරු කළමනාකාරීත්වය</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Letter Writing & Topic Q&A Column -->
-    <div class="md:col-span-2 space-y-4">
-      <div class="bg-white/90 backdrop-blur rounded-3xl p-5 floating-card border border-white/80">
-        <div class="flex items-center justify-between mb-2">
-          <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-            <span>✍️</span> මාතෘකාවක් යටතේ ලියන්න හෝ ප්‍රශ්නයක් අසන්න
-          </h2>
-          <span class="text-[11px] text-amber-700 font-semibold bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">ළමා විශේෂ දැනුම 💡</span>
+          <label class="block text-xs font-bold text-slate-700 mb-1">👶 ඔයාගේ නම:</label>
+          <input type="text" id="kidName" placeholder="උදා: සෙනුරි / තිසර" class="w-full px-4 py-3 rounded-2xl border-2 border-amber-200 bg-amber-50/50 text-sm font-bold text-slate-800 focus:outline-none focus:border-orange-400">
         </div>
 
-        <!-- Topic Search / Autocomplete -->
-        <div class="mb-3">
-          <label class="block text-xs font-semibold text-slate-600 mb-1">මාතෘකාව තෝරන්න හෝ අලුත් මාතෘකාවක් ටයිප් කරන්න:</label>
-          <input type="text" id="topicInput" list="topicsDatalist" placeholder="උදා: සෞරග්‍රහ මණ්ඩලය, සුරතල් බළලා, පරිසරය..." class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white">
-          <datalist id="topicsDatalist"></datalist>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">📱 දෙමාපියන්ගේ WhatsApp අංකය:</label>
+          <input type="tel" id="kidPhone" placeholder="07XXXXXXXX" class="w-full px-4 py-3 rounded-2xl border-2 border-amber-200 bg-amber-50/50 text-sm font-bold text-slate-800 focus:outline-none focus:border-orange-400 font-mono">
         </div>
 
-        <!-- Topic Badges -->
-        <div id="quickBadgesContainer" class="flex flex-wrap gap-1.5 mb-3"></div>
-
-        <textarea id="letterInput" rows="4" placeholder="ආයුබෝවන් මිතුරේ, අද මම ඔයාගෙන් අහන්න / ඔයාට කියන්න කැමතියි..." class="w-full p-4 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm leading-relaxed bg-amber-50/20"></textarea>
-
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-3 pt-2">
-          <span class="text-[11px] text-slate-500 font-medium">ලියාපදිංචි විස්තර WhatsApp වෙත ස්වයංක්‍රීයව යොමු වේ 📱</span>
-          <button id="sendBtn" onclick="sendLetter()" class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white font-bold rounded-2xl shadow-lg transition transform active:scale-95 text-sm">
-            <span>ලියුම / ප්‍රශ්නය යවන්න</span>
-            <i data-lucide="send" class="w-4 h-4"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Reply Envelope -->
-      <div id="replySection" class="hidden">
-        <div class="p-2 airmail-border rounded-3xl shadow-xl">
-          <div class="bg-white rounded-2xl p-6 relative letter-paper">
-            <div class="flex justify-between items-start mb-4 border-b pb-3">
-              <div>
-                <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full mb-1">PAR AVION / AIR MAIL</span>
-                <h3 id="replyTitle" class="text-base font-bold text-slate-800">මිතුරාගේ පිළිතුර</h3>
-                <p id="replyMeta" class="text-xs text-slate-400"></p>
-              </div>
-              <div class="w-16 h-20 border-2 border-dashed border-red-400 bg-red-50 rounded flex flex-col items-center justify-center p-1 text-center shadow-inner">
-                <span class="text-2xl">🕊️</span>
-                <span class="text-[9px] font-bold text-red-600 uppercase mt-0.5">SRI LANKA</span>
-                <span class="text-[8px] text-slate-500">POST 2026</span>
-              </div>
-            </div>
-
-            <div id="replyContent" class="text-slate-800 text-sm whitespace-pre-line min-h-[140px] pt-1 leading-relaxed"></div>
-
-            <div class="mt-6 pt-3 border-t flex items-center justify-between">
-              <button onclick="readAloud()" class="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl text-xs font-semibold transition">
-                <i data-lucide="volume-2" class="w-4 h-4"></i>
-                <span>කියවා අසන්න</span>
-              </button>
-              <button onclick="window.print()" class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-semibold transition">
-                <i data-lucide="printer" class="w-4 h-4"></i>
-                <span>මුද්‍රණය කරන්න (Print)</span>
-              </button>
-            </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">⚧️ ස්ත්‍රී / පුරුෂ:</label>
+            <select id="kidGender" class="w-full px-3 py-3 rounded-2xl border-2 border-amber-200 bg-amber-50/50 text-xs font-bold text-slate-800 focus:outline-none">
+              <option value="දුවක්">👧 දුවක් (Girl)</option>
+              <option value="පුතෙක්">👦 පුතෙක් (Boy)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">🎂 වයස:</label>
+            <select id="kidAge" class="w-full px-3 py-3 rounded-2xl border-2 border-amber-200 bg-amber-50/50 text-xs font-bold text-slate-800 focus:outline-none">
+              <option value="අවුරුදු 5 - 8">අවු 5 - 8</option>
+              <option value="අවුරුදු 9 - 12" selected>අවු 9 - 12</option>
+              <option value="අවුරුදු 13 - 16">අවු 13 - 16</option>
+            </select>
           </div>
         </div>
       </div>
-
-      <!-- Loading State -->
-      <div id="loadingState" class="hidden text-center py-10">
-        <div class="inline-block animate-bounce text-4xl mb-2">🕊️</div>
-        <p class="text-sm font-semibold text-orange-700">පෑනේ මිතුරා කරුණු සොයා පිළිතුරක් ලියමින් සිටියි...</p>
-        <p class="text-xs text-slate-500 mt-1">මොහොතක් රැඳෙන්න!</p>
-      </div>
     </div>
-  </main>
 
-  <!-- Main View 2: Kid-to-Kid Friendship Board -->
-  <main id="viewNetwork" class="max-w-5xl mx-auto hidden space-y-5">
-    <div class="bg-white/90 backdrop-blur rounded-3xl p-6 floating-card border border-white/80">
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4 mb-4">
-        <div>
-          <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-            <span>🤝</span> පෑනේ මිතුරු පුවරුව (Kid-to-Kid Pen Pals)
-          </h2>
-          <p class="text-xs text-slate-500">අලුත් යාළුවෙක් තෝරාගෙන දෙමාපියන්ගේ අධීක්ෂණය යටතේ ලියුම් ලියන්න</p>
+    <!-- Step 2: Choose Topic & Write Letter -->
+    <div class="bg-white/95 rounded-3xl p-5 kid-card">
+      <h2 class="text-base font-extrabold text-orange-500 mb-3 flex items-center gap-2">
+        <span>✍️</span> 2. මාතෘකාවක් සහ ලියුම
+      </h2>
+
+      <!-- Quick Topic Badges (Large Tap Targets) -->
+      <label class="block text-xs font-bold text-slate-600 mb-1.5 text-left">කැමති මාතෘකාවක් ඔබන්න (Touch):</label>
+      <div id="topicsContainer" class="flex flex-wrap gap-2 mb-3">
+        <!-- Generated by JS -->
+      </div>
+
+      <!-- Custom Topic Input -->
+      <div class="mb-3 text-left">
+        <input type="text" id="topicInput" placeholder="හෝ අලුත් මාතෘකාවක් මෙතන ටයිප් කරන්න..." class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200 text-xs font-bold text-slate-700 focus:outline-none focus:border-orange-400">
+      </div>
+
+      <!-- Letter Content -->
+      <div class="text-left mb-4">
+        <label class="block text-xs font-bold text-slate-700 mb-1">📝 ඔයාට කියන්න හෝ අහන්න ඕන දේ:</label>
+        <textarea id="letterText" rows="4" placeholder="ආයුබෝවන් මිතුරේ, අද මට ඔයාට කියන්න ඕනේ..." class="w-full p-4 rounded-2xl border-2 border-amber-200 bg-amber-50/30 text-xs sm:text-sm font-medium text-slate-800 focus:outline-none focus:border-orange-400 letter-box"></textarea>
+      </div>
+
+      <!-- Big Friendly Send Button -->
+      <button onclick="handleSend()" id="sendBtn" class="w-full py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white text-base font-extrabold rounded-2xl kid-btn flex items-center justify-center gap-2">
+        <span>ලියුම යවන්න 🚀</span>
+      </button>
+    </div>
+
+    <!-- Step 3: Friendly Pen Pal Response Envelope -->
+    <div id="replyWrapper" class="hidden bg-white/95 rounded-3xl p-5 kid-card border-4 border-amber-400">
+      <div class="flex justify-between items-center border-b-2 border-dashed border-amber-200 pb-3 mb-3">
+        <div class="text-left">
+          <span class="text-xs font-extrabold text-orange-500 block">🕊️ පෑනේ මිතුරාගේ පිළිතුර</span>
+          <h3 id="replyNameHeader" class="text-sm font-bold text-slate-800"></h3>
         </div>
-        <span class="text-xs font-semibold bg-green-100 text-green-800 px-3 py-1 rounded-full border border-green-200">
-          ආරක්ෂිත මිතුරු ජාලය 🛡️
-        </span>
+        <span class="text-3xl">🎉</span>
       </div>
 
-      <!-- Kid Cards Grid -->
-      <div id="networkGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- Rendered by JS -->
+      <div id="replyBody" class="text-left text-xs sm:text-sm text-slate-800 leading-relaxed whitespace-pre-line py-2">
+        <!-- Reply loads here -->
       </div>
-    </div>
-  </main>
 
-  <!-- Connect Friend Modal -->
-  <div id="connectModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl border border-orange-100">
-      <div class="flex justify-between items-center mb-3">
-        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
-          <span>💌</span> මිතුරු ලියුමක් යැවීම
-        </h3>
-        <button onclick="closeConnectModal()" class="text-slate-400 hover:text-slate-600">
-          <i data-lucide="x" class="w-5 h-5"></i>
+      <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center">
+        <button onclick="readAloud()" class="px-4 py-2 bg-blue-100 text-blue-700 rounded-xl font-bold text-xs flex items-center gap-1.5 active:scale-95">
+          <i data-lucide="volume-2" class="w-4 h-4"></i>
+          <span>අහන්න (Listen)</span>
         </button>
-      </div>
-
-      <div id="targetKidSummary" class="bg-orange-50 p-3 rounded-2xl mb-3 text-xs text-orange-950 flex items-center gap-3">
-        <!-- Target Kid details -->
-      </div>
-
-      <p class="text-xs text-slate-500 mb-2">ඔයාගේ නව මිතුරාට ලියන්න කැමති කෙටි සුබපැතුම මෙතැන ලියන්න:</p>
-      <textarea id="connectLetterText" rows="3" placeholder="ආයුබෝවන්, මම ඔයා සමඟ මිතුරු වෙන්න කැමතියි..." class="w-full p-3 rounded-xl border border-slate-200 text-xs bg-slate-50 mb-3 focus:outline-none focus:ring-2 focus:ring-orange-400"></textarea>
-
-      <p class="text-[11px] text-amber-700 bg-amber-50 p-2.5 rounded-xl border border-amber-200 mb-4">
-        🔔 <b>දෙමාපිය දැනුවත් කිරීම:</b> මෙය යැවූ සැනින් දෙමාපියන්ගේ සහ ඇඩ්මින්ගේ WhatsApp වෙත මෙම මිතුරු ඉල්ලීම සහ විස්තර ස්වයංක්‍රීයව යොමු වේ.
-      </p>
-
-      <div class="flex gap-2">
-        <button onclick="submitFriendRequest()" class="flex-1 py-2.5 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white font-bold rounded-xl text-xs shadow-md transition">මිතුරු ඇරයුම යවන්න</button>
-        <button onclick="closeConnectModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-semibold">අවලංගු කරන්න</button>
+        <span class="text-[10px] text-green-700 font-bold bg-green-100 px-2.5 py-1 rounded-full">WhatsApp පණිවිඩය යැවුණා ✅</span>
       </div>
     </div>
-  </div>
 
-  <!-- Payment Modal -->
-  <div id="paymentModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl border border-red-100 text-center">
-      <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3 text-3xl">⌛</div>
-      <h3 class="text-lg font-bold text-slate-800 mb-2">නොමිලේ අත්හදා බැලීමේ කාලය අවසන් විය</h3>
-      <div id="paymentNoticeContent" class="text-xs text-slate-600 mb-4 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left whitespace-pre-line leading-relaxed"></div>
-      <a href="https://wa.me/94784693750?text=මම%20පෑනේ%20මිතුරා%20සේවාවට%20ගෙවීම්%20කිරීමට%20කැමතියි" target="_blank" class="block w-full py-2.5 bg-green-500 hover:bg-green-600 text-white rounded-xl font-bold text-xs transition mb-2">
-        WhatsApp හරහා සම්බන්ධ වන්න
-      </a>
-    </div>
-  </div>
+  </main>
 
-  <!-- Blocked Notice Modal -->
-  <div id="blockedModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-red-200 text-center">
-      <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3 text-3xl">🚫</div>
-      <h3 class="text-lg font-bold text-red-600 mb-2">පරිශීලකයා අවහිර කර ඇත (Blocked)</h3>
-      <p class="text-xs text-slate-600 leading-relaxed">නුසුදුසු අන්තර්ගතයන් භාවිතය නිසා ඔබගේ ගිණුම ඇඩ්මින් විසින් අත්හිටුවා ඇත.</p>
-    </div>
-  </div>
-
-  <!-- Hidden Admin Icon -->
-  <button onclick="promptAdminLogin()" title="Admin Control" class="fixed bottom-3 right-3 w-9 h-9 rounded-full bg-slate-500/50 hover:bg-slate-700 text-white flex items-center justify-center transition backdrop-blur-sm shadow-md">
+  <!-- Admin Icon (Discrete bottom left) -->
+  <button onclick="openAdmin()" class="fixed bottom-3 right-3 w-10 h-10 rounded-full bg-slate-400/60 hover:bg-slate-700 text-white flex items-center justify-center shadow-lg backdrop-blur">
     <i data-lucide="lock" class="w-4 h-4"></i>
   </button>
 
-  <!-- Admin Modal -->
-  <div id="adminModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl p-6 max-w-2xl w-full shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
-      <div class="flex justify-between items-center border-b pb-3 mb-4">
-        <div>
-          <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-            <span>⚙️</span> ඇඩ්මින් පාලක පුවරුව
-          </h2>
-          <p class="text-xs text-slate-500">අයිතිකරුගේ විස්තර, නීති, සහ මිතුරු ඉල්ලීම් පාලනය</p>
-        </div>
-        <button onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-600">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
+  <script>
+    lucide.createIcons();
 
-      <!-- Stats -->
-      <div class="grid grid-cols-2 gap-3 mb-4">
-        <div class="bg-blue-50 border border-blue-200 p-3 rounded-2xl">
-          <span class="text-xs text-blue-600 font-semibold block">ලියාපදිංචි මුළු ළමුන්</span>
-          <span id="adminKidCount" class="text-2xl font-bold text-blue-900">0</span>
-        </div>
-        <div class="bg-red-50 border border-red-200 p-3 rounded-2xl">
-          <span class="text-xs text-red-600 font-semibold block">බ්ලොක් කළ අය</span>
-          <span id="adminBlockedCount" class="text-2xl font-bold text-red-900">0</span>
-        </div>
-      </div>
+    // Default Topics List
+    let topicsList = [
+      "🚀 අභ්‍යවකාශය ගැන",
+      "🦁 සතුන් ගැන",
+      "🏫 මගේ පාසල",
+      "🎨 චිත්‍ර අඳිමු",
+      "⚽ මම ආසම ක්‍රීඩාව"
+    ];
 
-      <div class="space-y-4 text-xs">
-        <!-- Owner Details Setup -->
-        <div class="border rounded-2xl p-4 bg-orange-50/50 border-orange-200">
-          <label class="block font-bold text-slate-800 mb-2">👤 සයිට් අයිතිකරුගේ තොරතුරු:</label>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <span class=
+    // Load default cartoon face on canvas
+    function initAvatar() {
+      const c = document.getElementById('photoCanvas');
+      const ctx = c.getContext('2d');
+      ctx.clearRect(0, 0, 90, 90);
+      
+      // 3D Soft Ball
+      let grad = ctx.createRadialGradient(40, 35, 5, 45, 45, 40);
+      grad.addColorStop(0, '#fef08a');
+      grad.addColorStop(0.6, '#fb923c');
+      grad.addColorStop(1, '#ea580c');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(45, 45, 38, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Eyes & Smile
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.arc(33, 40, 6, 0, Math.PI * 2);
+      ctx.arc(57, 40, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath();
+      ctx.arc(33, 40, 3, 0, Math.PI * 2);
+      ctx.arc(57, 40, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(45, 52, 12, 0.1 * Math.PI, 0.9 * Math.PI, false);
+      ctx.stroke();
+    }
+
+    // Convert real photo into 3D Cartoon Clay style on canvas
+    function loadPhoto(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = new Image();
+        img.onload = function() {
+          const c = document.getElementById('photoCanvas');
+          const ctx = c.getContext('2d');
+          ctx.clearRect(0, 0, 90, 90);
+
+          const size = Math.min(img.width, img.height);
+          ctx.drawImage(img, (img.width-size)/2, (img.height-size)/2, size, size, 0, 0, 90, 90);
+
+          // 3D Lighting & Cartoon Shade
+          const overlay = ctx.createRadialGradient(30, 30, 10, 45, 45, 50);
+          overlay.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+          overlay.addColorStop(0.7, 'rgba(255, 255, 255, 0)');
+          overlay.addColorStop(1, 'rgba(0, 0, 0, 0.35)');
+          ctx.fillStyle = overlay;
+          ctx.fillRect(0, 0, 90, 90);
+        };
+        img.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Render topics buttons with big touch targets
+    function renderTopics() {
+      const cont = document.getElementById('topicsContainer');
+      cont.innerHTML = '';
+      topicsList.forEach(t => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = "px-3.5 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-xs rounded-2xl active:scale-95 transition shadow-sm border border-amber-300";
+        btn.innerText = t;
+        btn.onclick = () => {
+          document.getElementById('topicInput').value = t;
+          document.getElementById('letterText').value = t + " ගැන මට කියන්න:";
+        };
+        cont.appendChild(btn);
+      });
+    }
+
+    // Handle Send & Auto WhatsApp
+    function handleSend() {
+      const name = document.getElementById('kidName').value.trim();
+      const phone = document.getElementById('kidPhone').value.trim();
+      const gender = document.getElementById('kidGender').value;
+      const age = document.getElementById('kidAge').value;
+      const topic = document.getElementById('topicInput').value.trim() || "සාමාන්‍ය දැනුම";
+      const letter = document.getElementById('letterText').value.trim();
+
+      if (!name) {
+        alert("කරුණාකර ඔයාගේ නම ඇතුළත් කරන්න! 😊");
+        return;
+      }
+      if (!phone) {
+        alert("කරුණාකර දෙමාපියන්ගේ දුරකථන/WhatsApp අංකය දාන්න! 📱");
+        return;
+      }
+      if (!letter) {
+        alert("කරුණාකර ලියුමක් හෝ ප්‍රශ්නයක් ලියන්න! ✍️");
+        return;
+      }
+
+      // 1. Send WhatsApp directly to Admin (0784693750)
+      const msg = `🔔 *පුංචි පෑනේ මිතුරා වෙතින් නව ලිපියක්!*\n\n👦 නම: ${name}\n📞 දුරකථනය: ${phone}\n⚧️ ස්ත්‍රී/පුරුෂ: ${gender}\n🎂 වයස: ${age}\n📌 මාතෘකාව: ${topic}\n\n📝 ලිපිය: "${letter}"`;
+      const waUrl = `https://api.whatsapp.com/send?phone=94784693750&text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
+
+      // 2. Generate Warm Educational Response
+      document.getElementById('replyNameHeader').innerText = `ආදරණීය ${name} වෙත (${age})`;
+      document.getElementById('replyBody').innerText = `ආයුබෝවන් ${name} යාළුවේ,\n\nඔයා මට එවපු ලියුම කියවලා මට හරිම සතුටු හිතුණා! "${topic}" ගැන ඔයා අහපු කරුණ හරිම ලස්සනයි.\n\nස්වභාවධර්මය සහ අපේ ලෝකය හරිම පුදුමාකාරයි. ඔයා පාසලේ වැඩත් හොඳින් කරලා, හැමදාම අලුත් දේවල් ඉගෙන ගන්න උනන්දු වෙන්න. මම හැමදාම ඔයාගේ හොඳ පෑනේ මිතුරා විදියට ඔයාට උදව් කරනවා!\n\nආදරයෙන්,\nඔයාගේ 3D පෑනේ මිතුරා 🕊️`;
+
+      document.getElementById('replyWrapper').classList.remove('hidden');
+      document.getElementById('replyWrapper').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Voice Read
+    function readAloud() {
+      const text = document.getElementById('replyBody').innerText;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'si-LK';
+      u.rate = 0.9;
+      window.speechSynthesis.speak(u);
+    }
+
+    // Admin Access
+    function openAdmin() {
+      const p = prompt("ඇඩ්මින් මුරපදය ගසන්න:");
+      if (p === "admin123") {
+        const newTopic = prompt("අලුත් මාතෘකාවක් එකතු කරන්න (උදා: ගස් වැල් ගැන):");
+        if (newTopic) {
+          topicsList.unshift(newTopic);
+          renderTopics();
+          alert("මාතෘකාව සාර්ථකව එකතු විය!");
+        }
+      } else if (p !== null) {
+        alert("මුරපදය වැරදියි!");
+      }
+    }
+
+    window.onload = () => {
+      initAvatar();
+      renderTopics();
+    };
+  </script>
+</body>
+</html>
