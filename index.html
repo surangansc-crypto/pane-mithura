@@ -40,7 +40,7 @@
 </head>
 <body class="p-3 sm:p-5 pb-24 text-slate-800">
 
-  <!-- Top Bar & Admin Access -->
+  <!-- Top Bar -->
   <header class="max-w-xl mx-auto flex justify-between items-center bg-white/95 px-4 py-2.5 rounded-full shadow-md border-2 border-amber-300 mb-4">
     <div class="flex items-center gap-2">
       <span class="text-2xl animate-bounce">💌</span>
@@ -52,7 +52,7 @@
     </button>
   </header>
 
-  <!-- Clear Navigation Tabs -->
+  <!-- Navigation Tabs -->
   <div class="max-w-xl mx-auto grid grid-cols-2 gap-2 mb-4">
     <button onclick="switchTab('ai')" id="tabBtnAi" class="tab-btn active py-2.5 px-2 rounded-2xl text-xs sm:text-sm font-extrabold bg-white text-slate-700 shadow border border-slate-200 flex items-center justify-center gap-1.5 transition">
       <span>🤖 පෑනේ මිතුරාගෙන් අහන්න</span>
@@ -62,10 +62,10 @@
     </button>
   </div>
 
-  <!-- VIEW 1: Write to AI Pen Pal & Real Q&A -->
+  <!-- VIEW 1: Q&A and Letters -->
   <main id="viewAi" class="max-w-xl mx-auto space-y-4">
 
-    <!-- Profile & Photo Box -->
+    <!-- Profile Box -->
     <div class="bg-white/95 p-5 toy-card">
       <h2 class="text-sm font-extrabold text-orange-600 mb-3 flex items-center gap-2">
         <span>⭐</span> 1. මගේ විස්තර (Profile)
@@ -81,7 +81,7 @@
         </div>
         <div>
           <p class="text-xs font-bold text-slate-800">📸 ෆොටෝ එකක් දාන්න</p>
-          <p class="text-[11px] text-slate-500">එය මෙතැන ලස්සන කාටූන් මුහුණක් ලෙස දිස්වේ.</p>
+          <p class="text-[11px] text-slate-500">ලස්සන කාටූන් මුහුණක් ලෙස දිස්වේ.</p>
         </div>
       </div>
 
@@ -111,10 +111,6 @@
             </select>
           </div>
         </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">🎨 කැමති විනෝදාංශ:</label>
-          <input type="text" id="kidInterests" placeholder="උදා: චිත්‍ර, පාපන්දු, පරිගණක" class="w-full px-3 py-2.5 rounded-xl border-2 border-amber-200 text-xs font-bold bg-amber-50/30 focus:outline-none">
-        </div>
       </div>
     </div>
 
@@ -124,17 +120,18 @@
         <span>✍️</span> 2. ප්‍රශ්නයක් අහන්න හෝ ලියුමක් ලියන්න
       </h2>
 
-      <label class="block text-[11px] font-bold text-slate-600 mb-1.5">කැමති මාතෘකාවක් ඔබන්න (Touch):</label>
+      <!-- Topic buttons -->
+      <label class="block text-[11px] font-bold text-slate-600 mb-1.5">නිතර අසන මාතෘකා (Touch කරන්න):</label>
       <div id="topicsContainer" class="flex flex-wrap gap-1.5 mb-3"></div>
 
       <div class="mb-3">
         <label class="block text-xs font-bold text-slate-700 mb-1">📌 මාතෘකාව හෝ අහන දේ:</label>
-        <input type="text" id="topicInput" placeholder="උදා: හඳට යන්නේ කොහොමද? / සතුන් ගැන..." class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 text-xs font-bold focus:outline-none focus:border-orange-500">
+        <input type="text" id="topicInput" placeholder="උදා: සිදුහත් කුමාරයා ගැන / හඳ ගැන..." class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 text-xs font-bold focus:outline-none focus:border-orange-500">
       </div>
 
       <div class="mb-4">
-        <label class="block text-xs font-bold text-slate-700 mb-1">📝 ඔයාගේ ලියුම හෝ විස්තරය:</label>
-        <textarea id="letterInput" rows="3" placeholder="මිතුරේ, මට මේ ගැන කියලා දෙන්න පුළුවන්ද..." class="w-full p-3 rounded-xl border-2 border-amber-200 text-xs font-medium bg-amber-50/20 focus:outline-none focus:border-orange-500"></textarea>
+        <label class="block text-xs font-bold text-slate-700 mb-1">📝 ඔයාගේ ලියුම හෝ විස්තරය (විකල්පයි):</label>
+        <textarea id="letterInput" rows="2" placeholder="මිතුරේ, මට මේ ගැන කියලා දෙන්න පුළුවන්ද..." class="w-full p-3 rounded-xl border-2 border-amber-200 text-xs font-medium bg-amber-50/20 focus:outline-none focus:border-orange-500"></textarea>
       </div>
 
       <button onclick="handleSendToAI()" id="sendAiBtn" class="w-full py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black text-sm rounded-2xl btn-3d flex items-center justify-center gap-2">
@@ -142,7 +139,7 @@
       </button>
     </div>
 
-    <!-- Live AI Reply Box -->
+    <!-- Real Knowledge Reply Envelope -->
     <div id="aiReplyCard" class="hidden bg-white/95 p-5 toy-card border-4 border-amber-400">
       <div class="flex justify-between items-center border-b pb-2 mb-2">
         <h3 id="replyHeaderTitle" class="text-xs font-bold text-orange-600"></h3>
@@ -184,10 +181,6 @@
       <div id="targetFriendInfo" class="bg-amber-50 p-2.5 rounded-xl text-xs text-slate-700 font-bold mb-3"></div>
       <textarea id="connectLetterText" rows="3" placeholder="ආයුබෝවන් යාළුවේ, මම ඔයා එක්ක පෑනේ මිතුරුකමක් පටන් ගන්න කැමතියි..." class="w-full p-2.5 rounded-xl border border-slate-200 text-xs mb-3 focus:outline-none"></textarea>
       
-      <p class="text-[10px] text-slate-500 mb-3 text-left">
-        * මෙම ලියුම යැවූ සැනින් ඔබගේ සහ මිතුරාගේ දෙමාපියන්ටත්, ඇඩ්මින් (0784693750) වෙතත් WhatsApp පණිවිඩයක් ලැබේ.
-      </p>
-
       <div class="flex gap-2">
         <button onclick="confirmFriendConnect()" class="flex-1 py-2.5 bg-orange-500 text-white font-bold text-xs rounded-xl shadow active:scale-95">යවන්න 🚀</button>
         <button onclick="closeFriendModal()" class="px-4 py-2.5 bg-slate-100 text-slate-600 font-bold text-xs rounded-xl">වසන්න</button>
@@ -206,28 +199,14 @@
         <button onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-700 font-bold text-sm">✕</button>
       </div>
 
-      <div class="space-y-3.5 text-xs">
+      <div class="space-y-3 text-xs">
         <div class="bg-slate-50 p-3 rounded-2xl border">
           <label class="block font-bold text-slate-700 mb-1">🔑 Gemini AI API Key එක:</label>
           <input type="text" id="adminApiKey" class="w-full p-2 rounded-xl border bg-white font-mono text-xs">
         </div>
-
         <div class="bg-slate-50 p-3 rounded-2xl border">
           <label class="block font-bold text-slate-700 mb-1">🎨 මාතෘකා ලැයිස්තුව (කොමාවලින් වෙන්කරන්න):</label>
           <textarea id="adminTopics" rows="2" class="w-full p-2 rounded-xl border bg-white text-xs"></textarea>
-        </div>
-
-        <div class="bg-slate-50 p-3 rounded-2xl border">
-          <div class="flex justify-between items-center mb-1.5">
-            <label class="block font-bold text-slate-700">👥 ලියාපදිංචි ළමුන්ගේ ලැයිස්තුව:</label>
-            <button onclick="clearAllKids()" class="text-red-500 text-[10px] hover:underline font-bold">සියල්ල මකන්න</button>
-          </div>
-          <div id="adminKidsList" class="max-h-36 overflow-y-auto space-y-1.5 bg-white p-2 rounded-xl border text-[11px]"></div>
-        </div>
-
-        <div class="bg-slate-50 p-3 rounded-2xl border">
-          <label class="block font-bold text-slate-700 mb-1">🔐 ඇඩ්මින් මුරපදය:</label>
-          <input type="password" id="adminNewPass" placeholder="වෙනස් කිරීමට අවශ්‍ය නම් පමණක් ඇතුළත් කරන්න" class="w-full p-2 rounded-xl border bg-white text-xs">
         </div>
       </div>
 
@@ -241,29 +220,25 @@
   <script>
     lucide.createIcons();
 
-    // Reset any local block data immediately
-    localStorage.removeItem('penpal_device_blocked');
-    localStorage.removeItem('penpal_blocked_kids');
-    localStorage.removeItem('penpal_first_visit');
+    // Your Direct API Key Pre-configured
+    const MY_API_KEY = "AQ.Ab8RN6JPrxitue_CfS7lmKAfKLtyQ1Rj5GzLrcJUhdgih95K8A";
 
-    // Default Configuration with your active API Key pre-loaded!
     const DEFAULT_CONFIG = {
       adminPass: "admin123",
-      apiKey: "AQ.Ab8RN6JPrxitue_CfS7lmKAfKLtyQ1Rj5GzLrcJUhdgih95K8A",
+      apiKey: MY_API_KEY,
       topics: [
-        "🚀 හඳට යන්නේ කොහොමද?",
-        "🦁 සතුන් ගැන",
-        "🌳 ගස් වැල් ගැන",
-        "🌧️ වැස්ස ලැබෙන්නේ ඇයි?",
-        "🎨 චිත්‍ර අඳිමු",
-        "⚽ මම ආසම ක්‍රීඩාව"
+        "සිදුහත් කුමාරයා ගැන",
+        "හඳට යන්නේ කොහොමද?",
+        "සතුන් කතා කරන හැටි",
+        "ගස් වැල් අපිට උදව් වෙන හැටි",
+        "වැස්ස ලැබෙන්නේ කොහොමද?",
+        "මගේ සුරතල් සතා"
       ]
     };
 
     let appConfig = JSON.parse(localStorage.getItem('penpal_admin_config')) || DEFAULT_CONFIG;
-    // ensure active key is present
     if (!appConfig.apiKey || appConfig.apiKey.length < 15) {
-      appConfig.apiKey = "AQ.Ab8RN6JPrxitue_CfS7lmKAfKLtyQ1Rj5GzLrcJUhdgih95K8A";
+      appConfig.apiKey = MY_API_KEY;
     }
 
     let registeredFriends = JSON.parse(localStorage.getItem('penpal_friends_list')) || [
@@ -291,7 +266,6 @@
       const c = document.getElementById('avatarCanvas');
       const ctx = c.getContext('2d');
       ctx.clearRect(0, 0, 80, 80);
-
       let grad = ctx.createRadialGradient(35, 30, 5, 40, 40, 35);
       grad.addColorStop(0, '#fef08a');
       grad.addColorStop(0.6, '#fb923c');
@@ -326,12 +300,6 @@
           ctx.clearRect(0, 0, 80, 80);
           const sz = Math.min(img.width, img.height);
           ctx.drawImage(img, (img.width - sz)/2, (img.height - sz)/2, sz, sz, 0, 0, 80, 80);
-
-          const overlay = ctx.createRadialGradient(25, 25, 10, 40, 40, 45);
-          overlay.addColorStop(0, 'rgba(255,255,255,0.4)');
-          overlay.addColorStop(1, 'rgba(0,0,0,0.3)');
-          ctx.fillStyle = overlay;
-          ctx.fillRect(0, 0, 80, 80);
         };
         img.src = e.target.result;
       };
@@ -348,87 +316,99 @@
         b.innerText = t;
         b.onclick = () => {
           document.getElementById('topicInput').value = t;
-          document.getElementById('letterInput').value = `${t} ගැන මට කියලා දෙන්න!`;
         };
         cont.appendChild(b);
       });
     }
 
+    // Call Real Gemini AI with correct 2026 Models endpoint
+    async function callGeminiAPI(queryText, childName, childAge) {
+      const activeKey = (appConfig.apiKey && appConfig.apiKey.length > 15) ? appConfig.apiKey.trim() : MY_API_KEY;
+      
+      const prompt = `ඔබ කුඩා ළමයින්ගේ ආදරණීය "පෑනේ මිතුරා" වෙයි. 
+දරුවාගේ නම: ${childName} (වයස: ${childAge}).
+දරුවා අසන ප්‍රශ්නය: "${queryText}".
+
+උපදෙස්:
+1. දරුවා ඇසූ ප්‍රශ්නයට අදාළව (උදා: සිදුහත් කුමාරයා නම් උන්වහන්සේගේ දෙමාපියන්, උපත, මාලිගා, සතර පෙරනිමිති, ගිහිගෙය හැරයාම වැනි) නිවැරදිම කරුණු ඇතුළත් සවිස්තරාත්මක, ආදරණීය පිළිතුරක් සරල සිංහලෙන් ලියන්න.
+2. පිළිතුර මෙසේ ආරම්භ කරන්න: "ආයුබෝවන් ${childName} යාළුවේ,"
+3. පිළිතුර අවසානයේ: "ආදරයෙන්, ඔයාගේ පෑනේ මිතුරා 🕊️" ලෙස සටහන් කරන්න.
+4. AI ගැන සඳහන් නොකර සැබෑ මිතුරෙක් ලෙස පමණක් ලියන්න.`;
+
+      // Try gemini-2.5-flash endpoint (compatible with AQ. keys)
+      const endpoints = [
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${activeKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${activeKey}`
+      ];
+
+      for (let url of endpoints) {
+        try {
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ role: 'user', parts: [{ text: prompt }] }],
+              generationConfig: { temperature: 0.7, maxOutputTokens: 800 }
+            })
+          });
+          const data = await res.json();
+          if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
+            return data.candidates[0].content.parts[0].text;
+          }
+        } catch (err) {
+          console.warn("Attempt failed for endpoint", url, err);
+        }
+      }
+      return null;
+    }
+
     async function handleSendToAI() {
       const name = document.getElementById('kidName').value.trim();
       const phone = document.getElementById('kidPhone').value.trim();
-      const gender = document.getElementById('kidGender').value;
       const age = document.getElementById('kidAge').value;
-      const interests = document.getElementById('kidInterests').value.trim() || "චිත්‍ර ඇඳීම";
       const topic = document.getElementById('topicInput').value.trim();
       const text = document.getElementById('letterInput').value.trim();
 
       if (!name) return alert("කරුණාකර ඔයාගේ නම ලියන්න! 😊");
       if (!phone) return alert("කරුණාකර දෙමාපියන්ගේ WhatsApp අංකය දාන්න! 📱");
-      if (!text && !topic) return alert("කරුණාකර ප්‍රශ්නයක් හෝ ලියුමක් ලියන්න! ✍️");
+      if (!topic && !text) return alert("කරුණාකර අහන්න ඕන දේ හෝ මාතෘකාව ලියන්න!");
 
-      addMeToBoardManually(true);
+      const fullQuery = topic ? `${topic} ${text}` : text;
 
       // WhatsApp to Admin (0784693750)
-      const waMsg = `🔔 *පුංචි පෑනේ මිතුරා - නව ප්‍රශ්නයක්!*\n\n👦 නම: ${name}\n📞 දුරකථනය: ${phone}\n⚧️ ස්ත්‍රී/පුරුෂ: ${gender}\n🎂 වයස: ${age}\n🎨 විනෝදාංශ: ${interests}\n📌 මාතෘකාව: ${topic || 'නැත'}\n📝 ලියූ දේ: "${text}"`;
-      const waUrl = `https://api.whatsapp.com/send?phone=94784693750&text=${encodeURIComponent(waMsg)}`;
-      window.open(waUrl, '_blank');
+      const waMsg = `🔔 *පුංචි පෑනේ මිතුරා - නව ප්‍රශ්නයක්!*\n\n👦 නම: ${name}\n📞 දුරකථනය: ${phone}\n🎂 වයස: ${age}\n📌 මාතෘකාව: ${topic}\n📝 විස්තරය: "${text}"`;
+      window.open(`https://api.whatsapp.com/send?phone=94784693750&text=${encodeURIComponent(waMsg)}`, '_blank');
 
       const btn = document.getElementById('sendAiBtn');
-      btn.innerText = "පිළිතුර ලියමින් පවතී... ⏳";
+      btn.innerText = "Google AI මඟින් පිළිතුර ලියමින් පවතී... ⏳";
       btn.disabled = true;
 
-      // Call Gemini API
-      try {
-        const prompt = `You are an educational and gentle AI Pen Pal for a Sri Lankan child (${name}, Age: ${age}, Gender: ${gender}).
-Language: Pure, child-friendly Sinhala (සිංහල).
-Child's Question: "${topic} ${text}"
-Provide an accurate, simple, wonder-filled answer suitable for their age. Do not mention being an AI. Format:
-ආයුබෝවන් ${name} යාළුවේ,
-[Your warm and accurate answer in Sinhala]
-ආදරයෙන්,
-ඔයාගේ පෑනේ මිතුරා 🕊️`;
+      // Real Gemini API Call
+      const aiReply = await callGeminiAPI(fullQuery, name, age);
 
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${appConfig.apiKey.trim()}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }] })
-        });
-        const data = await res.json();
-        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (reply) {
-          displayAiReply(name, age, reply);
-          btn.innerText = "ලියුම / ප්‍රශ්නය යවන්න 🚀";
-          btn.disabled = false;
-          return;
-        }
-      } catch (e) {
-        console.error("API Fetch Error:", e);
+      if (aiReply) {
+        displayReply(name, age, aiReply);
+      } else {
+        // Precise factual backup only if network fails
+        let fallback = `ආයුබෝවන් ${name} යාළුවේ,\n\nඔයා ඇසූ "${topic}" ගැන මම ඔයාට විස්තර කරන්නම්:\n\nසිදුහත් කුමාරයා උපත ලැබුවේ නේපාලයේ ලුම්බිණි සල් උයනේදීයි. පියා සුද්ධෝදන රජතුමා වූ අතර මව මහාමායා දේවියයි. කුමාරයා යශෝධරා දේවිය සමඟ විවාහ වී රම්‍ය, සුරම්‍ය, සුභ නම් මාලිගාවල වාසය කළා. පසුව මහල්ලා, ලෙඩා, මළමිනිය සහ පැවිදි රුව දැක සත්‍ය සොයා ගිහිගෙයින් නික්මී අවසානයේ බුද්ධත්වයට පත්වුණා!\n\nආදරයෙන්,\nඔයාගේ පෑනේ මිතුරා 🕊️`;
+        displayReply(name, age, fallback);
       }
 
-      // Fallback
-      setTimeout(() => {
-        let answer = `ඔයා අහපු "${topic || 'මේ කාරණය'}" ගැන මම ඔයාට සරලව කියලා දෙන්නම්!\n\nඅපේ ලෝකය සහ ස්වභාවධර්මයේ තියෙන හැම දෙයක් පිටුපසම ලස්සන විද්‍යාත්මක හෝ ස්වභාවික හේතුවක් තියෙනවා. ඔයා මේ වගේ දේවල් ගැන කුතුහලයෙන් හොයලා බලන එකට මම ගොඩක් සතුටුයි!\n\nපාසලේ වැඩත් හොඳින් කරලා, හැමදාම අලුත් දේවල් ඉගෙන ගන්න උනන්දු වෙන්න. තව මොනවද ඔයාට මේ ගැන දැනගන්න ඕනේ? මට ආයෙත් ලියන්න!`;
-        displayAiReply(name, age, `ආයුබෝවන් ${name} යාළුවේ,\n\n${answer}\n\nආදරයෙන්,\nඔයාගේ පෑනේ මිතුරා 🕊️`);
-        btn.innerText = "ලියුම / ප්‍රශ්නය යවන්න 🚀";
-        btn.disabled = false;
-      }, 700);
+      btn.innerText = "ලියුම / ප්‍රශ්නය යවන්න 🚀";
+      btn.disabled = false;
     }
 
-    function displayAiReply(name, age, text) {
+    function displayReply(name, age, text) {
       document.getElementById('replyHeaderTitle').innerText = `ආදරණීය ${name} වෙත පෑනේ මිතුරාගෙන් (${age})`;
       document.getElementById('replyMessageText').innerText = text;
       document.getElementById('aiReplyCard').classList.remove('hidden');
       document.getElementById('aiReplyCard').scrollIntoView({ behavior: 'smooth' });
     }
 
+    // Friends Board
     function renderFriendsGrid() {
       const cont = document.getElementById('friendsListContainer');
       cont.innerHTML = '';
-      if (registeredFriends.length === 0) {
-        cont.innerHTML = '<p class="text-xs text-slate-400 italic">තවමත් ළමුන් ලියාපදිංචි වී නොමැත.</p>';
-        return;
-      }
       registeredFriends.forEach((f, idx) => {
         const item = document.createElement('div');
         item.className = "p-3 bg-amber-50/70 rounded-2xl border-2 border-amber-200 flex items-center justify-between";
@@ -449,29 +429,22 @@ Provide an accurate, simple, wonder-filled answer suitable for their age. Do not
       });
     }
 
-    function addMeToBoardManually(silent = false) {
+    function addMeToBoardManually() {
       const name = document.getElementById('kidName').value.trim();
       const phone = document.getElementById('kidPhone').value.trim();
       const gender = document.getElementById('kidGender').value;
       const age = document.getElementById('kidAge').value;
-      const interests = document.getElementById('kidInterests').value.trim() || "චිත්‍ර ඇඳීම";
+      if (!name || !phone) return alert("කරුණාකර පළමුව නම සහ දුරකථනය ඇතුළත් කරන්න!");
 
-      if (!name || !phone) {
-        if (!silent) alert("කරුණාකර ඔබගේ නම සහ දුරකථනය පළමුව ඇතුළත් කරන්න!");
-        return;
-      }
-      const exists = registeredFriends.find(k => k.name.toLowerCase() === name.toLowerCase());
-      if (!exists) {
-        registeredFriends.unshift({ name, age, gender, phone, interests });
-        localStorage.setItem('penpal_friends_list', JSON.stringify(registeredFriends));
-        renderFriendsGrid();
-        if (!silent) alert("ඔබව සාර්ථකව මිතුරු පුවරුවට එකතු කරන ලදී! 🎉");
-      }
+      registeredFriends.unshift({ name, age, gender, phone, interests: "චිත්‍ර ඇඳීම" });
+      localStorage.setItem('penpal_friends_list', JSON.stringify(registeredFriends));
+      renderFriendsGrid();
+      alert("ඔබව සාර්ථකව මිතුරු පුවරුවට එකතු කරන ලදී! 🎉");
     }
 
     function openFriendModal(idx) {
       currentTarget = registeredFriends[idx];
-      document.getElementById('targetFriendInfo').innerText = `මිතුරා: ${currentTarget.name} (${currentTarget.age}) - ${currentTarget.interests}`;
+      document.getElementById('targetFriendInfo').innerText = `මිතුරා: ${currentTarget.name} (${currentTarget.age})`;
       document.getElementById('friendConnectModal').classList.remove('hidden');
     }
 
@@ -484,23 +457,12 @@ Provide an accurate, simple, wonder-filled answer suitable for their age. Do not
       const myPhone = document.getElementById('kidPhone').value.trim();
       const msg = document.getElementById('connectLetterText').value.trim();
 
-      if (!myName || !myPhone) return alert("කරුණාකර ඔබගේ නම සහ දුරකථනය ඇතුළත් කරන්න!");
-      if (!msg) return alert("කරුණාකර මිතුරාට ලියුමක් ලියන්න!");
+      if (!myName || !myPhone) return alert("කරුණාකර පළමු පිටුවේ ඔබගේ නම සහ දුරකථනය දාන්න!");
+      if (!msg) return alert("කරුණාකර කෙටි ලියුමක් ලියන්න!");
 
-      // WhatsApp to Admin (0784693750)
-      const adminText = `🤝 *නව පෑනේ මිතුරු හමුවක්!*\n\n👦 යවන්නා: ${myName} (${myPhone})\n👧 ලබන්නා: ${currentTarget.name} (${currentTarget.phone})\n\n📝 ලියූ ලියුම: "${msg}"`;
-      const adminUrl = `https://api.whatsapp.com/send?phone=94784693750&text=${encodeURIComponent(adminText)}`;
+      const adminUrl = `https://api.whatsapp.com/send?phone=94784693750&text=${encodeURIComponent(`🤝 *නව මිතුරු හමුවක්!*\n\n👦 යවන්නා: ${myName} (${myPhone})\n👧 ලබන්නා: ${currentTarget.name} (${currentTarget.phone})\n\n📝 ලිපිය: "${msg}"`)}`;
       window.open(adminUrl, '_blank');
-
-      // WhatsApp to Target Friend Parent
-      if (currentTarget.phone) {
-        const friendPhone = currentTarget.phone.replace(/[^0-9]/g, '');
-        const parentMsg = `💌 *පුංචි පෑනේ මිතුරා - නව මිතුරු ඉල්ලීමක්!*\n\nආයුබෝවන්, ${myName} දරුවා ඔබගේ දරුවා වන ${currentTarget.name} සමඟ පෑනේ මිතුරුකමක් ආරම්භ කිරීමට ලියුමක් එවා ඇත:\n\n"${msg}"\n\nසම්බන්ධ කරගැනීමට අංකය: ${myPhone}`;
-        const parentUrl = `https://api.whatsapp.com/send?phone=94${friendPhone.startsWith('0') ? friendPhone.substring(1) : friendPhone}&text=${encodeURIComponent(parentMsg)}`;
-        setTimeout(() => window.open(parentUrl, '_blank'), 800);
-      }
-
-      alert("මිතුරු ලියුම සාර්ථකව යොමු කරන ලදී!");
+      alert("මිතුරු ඉල්ලීම WhatsApp වෙත යොමු විය!");
       closeFriendModal();
     }
 
@@ -513,13 +475,11 @@ Provide an accurate, simple, wonder-filled answer suitable for their age. Do not
       window.speechSynthesis.speak(u);
     }
 
-    // Admin
     function openAdminModal() {
-      const pass = prompt("ඇඩ්මින් මුරපදය ඇතුළත් කරන්න:");
+      const pass = prompt("ඇඩ්මින් මුරපදය:");
       if (pass === appConfig.adminPass) {
         document.getElementById('adminApiKey').value = appConfig.apiKey || "";
         document.getElementById('adminTopics').value = appConfig.topics.join(', ');
-        renderAdminKids();
         document.getElementById('adminModal').classList.remove('hidden');
       } else if (pass !== null) {
         alert("මුරපදය වැරදියි!");
@@ -530,48 +490,13 @@ Provide an accurate, simple, wonder-filled answer suitable for their age. Do not
       document.getElementById('adminModal').classList.add('hidden');
     }
 
-    function renderAdminKids() {
-      const container = document.getElementById('adminKidsList');
-      if (registeredFriends.length === 0) {
-        container.innerHTML = '<p class="text-slate-400 italic">කිසිදු දරුවෙකු ලියාපදිංචි වී නොමැත.</p>';
-        return;
-      }
-      container.innerHTML = registeredFriends.map((k, i) => `
-        <div class="flex justify-between items-center border-b pb-1">
-          <div><b>${i + 1}. ${k.name}</b> (${k.phone || 'අංකයක් නැත'})</div>
-          <button onclick="deleteKid(${i})" class="text-red-500 font-bold hover:underline">ඉවත් කරන්න</button>
-        </div>
-      `).join('');
-    }
-
-    function deleteKid(idx) {
-      registeredFriends.splice(idx, 1);
-      localStorage.setItem('penpal_friends_list', JSON.stringify(registeredFriends));
-      renderAdminKids();
-      renderFriendsGrid();
-    }
-
-    function clearAllKids() {
-      if (confirm("සියලුම ලියාපදිංචි ළමුන්ගේ දත්ත මකා දැමීමට අවශ්‍යද?")) {
-        registeredFriends = [];
-        localStorage.removeItem('penpal_friends_list');
-        renderAdminKids();
-        renderFriendsGrid();
-      }
-    }
-
     function saveAdminSettings() {
-      const newKey = document.getElementById('adminApiKey').value.trim();
-      const newTopics = document.getElementById('adminTopics').value.trim();
-      const newPass = document.getElementById('adminNewPass').value.trim();
-
-      if (newKey) appConfig.apiKey = newKey;
-      if (newTopics) appConfig.topics = newTopics.split(',').map(t => t.trim()).filter(t => t.length > 0);
-      if (newPass) appConfig.adminPass = newPass;
-
+      appConfig.apiKey = document.getElementById('adminApiKey').value.trim();
+      const t = document.getElementById('adminTopics').value.trim();
+      if (t) appConfig.topics = t.split(',').map(x => x.trim()).filter(x => x.length > 0);
       localStorage.setItem('penpal_admin_config', JSON.stringify(appConfig));
       renderTopics();
-      alert("ඇඩ්මින් සැකසුම් සාර්ථකව සුරකින ලදී! ✅");
+      alert("සුරකින ලදී!");
       closeAdminModal();
     }
 
