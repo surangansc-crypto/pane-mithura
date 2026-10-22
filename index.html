@@ -3,326 +3,392 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>පුංචි පෑනේ මිතුරා | Kids AI Pen Pal</title>
+  <title>පුංචි පෑනේ මිතුරා | Real Kids Pen Pal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+Sinhala:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+Sinhala:wght@600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     body {
       font-family: 'Fredoka', 'Noto Sans Sinhala', sans-serif;
-      background: radial-gradient(circle at top, #fef08a, #fed7aa, #bae6fd);
+      background: radial-gradient(circle at 50% 10%, #bfdbfe 0%, #fed7aa 60%, #fbcfe8 100%);
       min-height: 100vh;
       touch-action: manipulation;
     }
-    .kid-card {
-      border-radius: 28px;
-      box-shadow: 0 14px 0 #fb923c, 0 20px 25px rgba(0,0,0,0.1);
-      border: 4px solid #fff;
+    .main-box {
+      border: 4px solid #ffffff;
+      box-shadow: 0 10px 0 #fb923c, 0 15px 25px rgba(0,0,0,0.1);
+      border-radius: 30px;
     }
-    .kid-btn {
+    .big-btn {
       box-shadow: 0 6px 0 #c2410c;
-      transition: all 0.1s ease-in-out;
+      transition: all 0.1s;
     }
-    .kid-btn:active {
+    .big-btn:active {
       transform: translateY(4px);
       box-shadow: 0 2px 0 #c2410c;
     }
-    .letter-box {
-      background: #fffdf5;
-      background-image: repeating-linear-gradient(transparent, transparent 31px, #fed7aa 31px, #fed7aa 33px);
-      line-height: 33px;
+    .nav-btn {
+      transition: all 0.15s;
+    }
+    .nav-btn.active {
+      background-color: #ea580c;
+      color: #ffffff;
+      box-shadow: 0 4px 0 #9a3412;
     }
   </style>
 </head>
-<body class="p-3 sm:p-6 pb-20 select-none">
+<body class="p-3 sm:p-5 pb-24 text-slate-800">
 
-  <!-- Main App Header -->
-  <header class="max-w-2xl mx-auto text-center mb-5">
-    <div class="inline-flex items-center gap-2 bg-white px-5 py-2.5 rounded-full shadow-md border-2 border-amber-300 mb-2">
+  <!-- Header -->
+  <header class="max-w-xl mx-auto text-center mb-4">
+    <div class="inline-flex items-center gap-2 bg-white px-5 py-2.5 rounded-full shadow-md border-2 border-amber-300">
       <span class="text-3xl animate-bounce">💌</span>
-      <h1 class="text-2xl sm:text-3xl font-extrabold text-orange-600">පුංචි පෑනේ මිතුරා</h1>
+      <h1 class="text-2xl font-black text-orange-600">පුංචි පෑනේ මිතුරා</h1>
     </div>
-    <p class="text-xs font-bold text-amber-900 bg-amber-200/60 inline-block px-3 py-1 rounded-full">
-      🎈 ළමයින්ගේ ආදරණීය 3D යාළුවා 🎈
-    </p>
   </header>
 
-  <!-- Single Easy-to-use Form Container -->
-  <main class="max-w-2xl mx-auto space-y-5">
+  <!-- Big Clear Navigation Tabs (Easy Touch) -->
+  <div class="max-w-xl mx-auto grid grid-cols-2 gap-2 mb-4">
+    <button onclick="changeView('ai-pal')" id="btnTabAi" class="nav-btn active py-3 px-2 rounded-2xl text-xs sm:text-sm font-bold bg-white text-slate-700 shadow flex items-center justify-center gap-1.5 border border-slate-200">
+      <span>🤖 පෑනේ මිතුරාගෙන් අහන්න</span>
+    </button>
+    <button onclick="changeView('kid-network')" id="btnTabNet" class="nav-btn py-3 px-2 rounded-2xl text-xs sm:text-sm font-bold bg-white text-slate-700 shadow flex items-center justify-center gap-1.5 border border-slate-200">
+      <span>👧👦 යාළුවෝ තෝරගන්න</span>
+    </button>
+  </div>
 
-    <!-- Step 1: Profile & 3D Photo -->
-    <div class="bg-white/95 rounded-3xl p-5 kid-card">
-      <h2 class="text-base font-extrabold text-orange-500 mb-4 flex items-center gap-2">
-        <span>⭐</span> 1. මගේ විස්තර දාන්න
+  <!-- VIEW 1: Write to AI Pen Pal & Ask Questions -->
+  <section id="viewAiPal" class="max-w-xl mx-auto space-y-4">
+
+    <!-- Profile & Photo Box -->
+    <div class="bg-white/95 p-5 main-box">
+      <h2 class="text-sm font-extrabold text-orange-600 mb-3 flex items-center gap-2">
+        <span>⭐</span> මගේ විස්තර (පැතිකඩ)
       </h2>
 
-      <!-- 3D Photo Avatar Box -->
-      <div class="flex items-center gap-4 mb-4 bg-amber-50 p-3 rounded-2xl border-2 border-amber-200">
+      <div class="flex items-center gap-3 bg-amber-50 p-3 rounded-2xl border-2 border-amber-200 mb-4">
         <div class="relative flex-shrink-0">
-          <canvas id="photoCanvas" width="90" height="90" class="w-20 h-20 rounded-2xl border-2 border-orange-400 bg-white shadow-inner"></canvas>
-          <label for="cameraFile" class="absolute -bottom-2 -right-2 bg-orange-500 text-white p-2 rounded-xl shadow cursor-pointer active:scale-90 transition">
-            <i data-lucide="camera" class="w-4 h-4"></i>
+          <canvas id="userAvatarCanvas" width="80" height="80" class="w-16 h-16 rounded-2xl border-2 border-orange-400 bg-white shadow-inner"></canvas>
+          <label for="filePhoto" class="absolute -bottom-1 -right-1 bg-orange-500 text-white p-1.5 rounded-xl shadow cursor-pointer active:scale-90">
+            <i data-lucide="camera" class="w-3.5 h-3.5"></i>
           </label>
-          <input type="file" id="cameraFile" accept="image/*" class="hidden" onchange="loadPhoto(event)">
+          <input type="file" id="filePhoto" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)">
         </div>
-        <div class="text-left">
-          <p class="text-xs font-bold text-slate-700">📸 ඔයාගේ ෆොටෝ එකක් දාන්න</p>
-          <p class="text-[11px] text-slate-500 mt-0.5">එය මෙතැන ලස්සන 3D කාටූන් එකක් ලෙස පෙනේවි!</p>
+        <div>
+          <p class="text-xs font-bold text-slate-800">📸 ෆොටෝ එකක් දාන්න</p>
+          <p class="text-[11px] text-slate-500">ඔබේ රූපය මෙතැන ලස්සන කාටූන් මුහුණක් ලෙස දිස්වේ.</p>
         </div>
       </div>
 
-      <!-- Inputs Grid -->
-      <div class="space-y-3 text-left">
+      <div class="space-y-3">
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">👶 ඔයාගේ නම:</label>
-          <input type="text" id="kidName" placeholder="උදා: සෙනුරි / තිසර" class="w-full px-4 py-3 rounded-2xl border-2 border-amber-200 bg-amber-50/50 text-sm font-bold text-slate-800 focus:outline-none focus:border-orange-400">
+          <input type="text" id="inputName" placeholder="උදා: සෙනුරි / තිසර" class="w-full px-3 py-2.5 rounded-xl border-2 border-amber-200 text-xs font-bold bg-amber-50/40 focus:outline-none focus:border-orange-500">
         </div>
-
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">📱 දෙමාපියන්ගේ WhatsApp අංකය:</label>
-          <input type="tel" id="kidPhone" placeholder="07XXXXXXXX" class="w-full px-4 py-3 rounded-2xl border-2 border-amber-200 bg-amber-50/50 text-sm font-bold text-slate-800 focus:outline-none focus:border-orange-400 font-mono">
+          <input type="tel" id="inputPhone" placeholder="07XXXXXXXX" class="w-full px-3 py-2.5 rounded-xl border-2 border-amber-200 text-xs font-bold bg-amber-50/40 focus:outline-none focus:border-orange-500 font-mono">
         </div>
-
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">⚧️ ස්ත්‍රී / පුරුෂ:</label>
-            <select id="kidGender" class="w-full px-3 py-3 rounded-2xl border-2 border-amber-200 bg-amber-50/50 text-xs font-bold text-slate-800 focus:outline-none">
-              <option value="දුවක්">👧 දුවක් (Girl)</option>
-              <option value="පුතෙක්">👦 පුතෙක් (Boy)</option>
+            <select id="inputGender" class="w-full px-2 py-2.5 rounded-xl border-2 border-amber-200 text-xs font-bold bg-amber-50/40">
+              <option value="දුවක්">👧 දුවක්</option>
+              <option value="පුතෙක්">👦 පුතෙක්</option>
             </select>
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">🎂 වයස:</label>
-            <select id="kidAge" class="w-full px-3 py-3 rounded-2xl border-2 border-amber-200 bg-amber-50/50 text-xs font-bold text-slate-800 focus:outline-none">
-              <option value="අවුරුදු 5 - 8">අවු 5 - 8</option>
-              <option value="අවුරුදු 9 - 12" selected>අවු 9 - 12</option>
-              <option value="අවුරුදු 13 - 16">අවු 13 - 16</option>
+            <select id="inputAge" class="w-full px-2 py-2.5 rounded-xl border-2 border-amber-200 text-xs font-bold bg-amber-50/40">
+              <option value="අවු 5 - 8">අවු 5 - 8</option>
+              <option value="අවු 9 - 12" selected>අවු 9 - 12</option>
+              <option value="අවු 13 - 16">අවු 13 - 16</option>
             </select>
           </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">🎨 කැමති විනෝදාංශ:</label>
+          <input type="text" id="inputInterests" placeholder="උදා: චිත්‍ර, පාපන්දු, පරිගණක" class="w-full px-3 py-2.5 rounded-xl border-2 border-amber-200 text-xs font-bold bg-amber-50/40 focus:outline-none">
         </div>
       </div>
     </div>
 
-    <!-- Step 2: Choose Topic & Write Letter -->
-    <div class="bg-white/95 rounded-3xl p-5 kid-card">
-      <h2 class="text-base font-extrabold text-orange-500 mb-3 flex items-center gap-2">
-        <span>✍️</span> 2. මාතෘකාවක් සහ ලියුම
+    <!-- Letter & Questions Box -->
+    <div class="bg-white/95 p-5 main-box">
+      <h2 class="text-sm font-extrabold text-orange-600 mb-2 flex items-center gap-2">
+        <span>✍️</span> ප්‍රශ්නයක් අහන්න හෝ ලියුමක් ලියන්න
       </h2>
 
-      <!-- Quick Topic Badges (Large Tap Targets) -->
-      <label class="block text-xs font-bold text-slate-600 mb-1.5 text-left">කැමති මාතෘකාවක් ඔබන්න (Touch):</label>
-      <div id="topicsContainer" class="flex flex-wrap gap-2 mb-3">
-        <!-- Generated by JS -->
+      <!-- Topic buttons -->
+      <label class="block text-[11px] font-bold text-slate-600 mb-1.5">කැමති මාතෘකාවක් ඔබන්න:</label>
+      <div id="quickTopics" class="flex flex-wrap gap-1.5 mb-3"></div>
+
+      <!-- Specific Question / Topic text -->
+      <div class="mb-3">
+        <label class="block text-xs font-bold text-slate-700 mb-1">📌 මාතෘකාව හෝ අහන දේ:</label>
+        <input type="text" id="inputTopic" placeholder="උදා: හඳට යන්නේ කොහොමද? / බළලුන් ගැන..." class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 text-xs font-bold focus:outline-none focus:border-orange-500">
       </div>
 
-      <!-- Custom Topic Input -->
-      <div class="mb-3 text-left">
-        <input type="text" id="topicInput" placeholder="හෝ අලුත් මාතෘකාවක් මෙතන ටයිප් කරන්න..." class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200 text-xs font-bold text-slate-700 focus:outline-none focus:border-orange-400">
+      <div class="mb-4">
+        <label class="block text-xs font-bold text-slate-700 mb-1">📝 ඔයාගේ ලියුම හෝ විස්තරය:</label>
+        <textarea id="inputText" rows="3" placeholder="මිතුරේ, මට මේ ගැන කියලා දෙන්න පුළුවන්ද..." class="w-full p-3 rounded-xl border-2 border-amber-200 text-xs font-medium bg-amber-50/20 focus:outline-none focus:border-orange-500"></textarea>
       </div>
 
-      <!-- Letter Content -->
-      <div class="text-left mb-4">
-        <label class="block text-xs font-bold text-slate-700 mb-1">📝 ඔයාට කියන්න හෝ අහන්න ඕන දේ:</label>
-        <textarea id="letterText" rows="4" placeholder="ආයුබෝවන් මිතුරේ, අද මට ඔයාට කියන්න ඕනේ..." class="w-full p-4 rounded-2xl border-2 border-amber-200 bg-amber-50/30 text-xs sm:text-sm font-medium text-slate-800 focus:outline-none focus:border-orange-400 letter-box"></textarea>
-      </div>
-
-      <!-- Big Friendly Send Button -->
-      <button onclick="handleSend()" id="sendBtn" class="w-full py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white text-base font-extrabold rounded-2xl kid-btn flex items-center justify-center gap-2">
+      <button onclick="handleSendToAI()" class="w-full py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black text-sm rounded-2xl big-btn flex items-center justify-center gap-2">
         <span>ලියුම යවන්න 🚀</span>
       </button>
     </div>
 
-    <!-- Step 3: Friendly Pen Pal Response Envelope -->
-    <div id="replyWrapper" class="hidden bg-white/95 rounded-3xl p-5 kid-card border-4 border-amber-400">
-      <div class="flex justify-between items-center border-b-2 border-dashed border-amber-200 pb-3 mb-3">
-        <div class="text-left">
-          <span class="text-xs font-extrabold text-orange-500 block">🕊️ පෑනේ මිතුරාගේ පිළිතුර</span>
-          <h3 id="replyNameHeader" class="text-sm font-bold text-slate-800"></h3>
-        </div>
-        <span class="text-3xl">🎉</span>
+    <!-- AI Real Reply Envelope -->
+    <div id="aiReplyBox" class="hidden bg-white/95 p-5 main-box border-4 border-amber-400">
+      <div class="flex justify-between items-center border-b pb-2 mb-2">
+        <h3 id="replyHeader" class="text-xs font-bold text-orange-600"></h3>
+        <span class="text-2xl">🕊️</span>
       </div>
-
-      <div id="replyBody" class="text-left text-xs sm:text-sm text-slate-800 leading-relaxed whitespace-pre-line py-2">
-        <!-- Reply loads here -->
-      </div>
-
-      <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center">
-        <button onclick="readAloud()" class="px-4 py-2 bg-blue-100 text-blue-700 rounded-xl font-bold text-xs flex items-center gap-1.5 active:scale-95">
-          <i data-lucide="volume-2" class="w-4 h-4"></i>
-          <span>අහන්න (Listen)</span>
+      <div id="replyAnswer" class="text-xs text-slate-800 leading-relaxed whitespace-pre-line py-2"></div>
+      <div class="mt-3 pt-2 border-t flex justify-between items-center">
+        <button onclick="speakText()" class="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs font-bold flex items-center gap-1 active:scale-95">
+          <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+          <span>අහන්න</span>
         </button>
-        <span class="text-[10px] text-green-700 font-bold bg-green-100 px-2.5 py-1 rounded-full">WhatsApp පණිවිඩය යැවුණා ✅</span>
+        <span class="text-[10px] text-green-700 font-bold bg-green-100 px-2 py-0.5 rounded-full">WhatsApp එකට යැවුණා ✅</span>
       </div>
     </div>
 
-  </main>
+  </section>
 
-  <!-- Admin Icon (Discrete bottom left) -->
-  <button onclick="openAdmin()" class="fixed bottom-3 right-3 w-10 h-10 rounded-full bg-slate-400/60 hover:bg-slate-700 text-white flex items-center justify-center shadow-lg backdrop-blur">
-    <i data-lucide="lock" class="w-4 h-4"></i>
-  </button>
+  <!-- VIEW 2: Real Kid-to-Kid Pen Pal Friendship Board -->
+  <section id="viewKidNetwork" class="max-w-xl mx-auto space-y-4 hidden">
+    <div class="bg-white/95 p-5 main-box">
+      <div class="flex justify-between items-center mb-3 border-b pb-2">
+        <div>
+          <h2 class="text-sm font-extrabold text-orange-600">👧👦 ලියාපදිංචි පෑනේ මිතුරන්</h2>
+          <p class="text-[11px] text-slate-500">ඔයා කැමති යාළුවෙක් තෝරාගෙන ලියුමක් එවන්න</p>
+        </div>
+        <button onclick="registerMeToBoard()" class="px-3 py-1.5 bg-green-500 text-white font-bold text-xs rounded-xl shadow active:scale-95">
+          + මාවත් එකතු කරන්න
+        </button>
+      </div>
+
+      <!-- Friend Cards Grid -->
+      <div id="friendCardsGrid" class="space-y-3">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Friend Connect Modal -->
+  <div id="modalFriend" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl p-5 max-w-sm w-full border-4 border-amber-300 text-center">
+      <h3 class="text-sm font-black text-orange-600 mb-2">💌 මිතුරු ලියුමක් යැවීම</h3>
+      <div id="friendTargetInfo" class="bg-amber-50 p-2.5 rounded-xl text-xs text-slate-700 font-bold mb-3"></div>
+      <textarea id="friendMessageText" rows="3" placeholder="ආයුබෝවන් යාළුවේ, මම ඔයා එක්ක පෑනේ මිතුරුකමක් පටන් ගන්න කැමතියි..." class="w-full p-2.5 rounded-xl border border-slate-200 text-xs mb-3 focus:outline-none"></textarea>
+      
+      <p class="text-[10px] text-slate-500 mb-3 text-left">
+        * මෙය යැවූ විට ඔබගේ සහ මිතුරාගේ දෙමාපියන්ටත්, ඇඩ්මින් (0784693750) වෙතත් WhatsApp පණිවිඩයක් ලැබෙනු ඇත.
+      </p>
+
+      <div class="flex gap-2">
+        <button onclick="confirmFriendSend()" class="flex-1 py-2.5 bg-orange-500 text-white font-bold text-xs rounded-xl shadow active:scale-95">යවන්න 🚀</button>
+        <button onclick="closeModal()" class="px-4 py-2.5 bg-slate-100 text-slate-600 font-bold text-xs rounded-xl">වසන්න</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     lucide.createIcons();
 
-    // Default Topics List
-    let topicsList = [
-      "🚀 අභ්‍යවකාශය ගැන",
-      "🦁 සතුන් ගැන",
-      "🏫 මගේ පාසල",
-      "🎨 චිත්‍ර අඳිමු",
-      "⚽ මම ආසම ක්‍රීඩාව"
+    // Built-in smart answers for common kids questions (Instant & accurate)
+    const topicQuestions = [
+      { t: "🚀 හඳට යන්නේ කොහොමද?", q: "හඳට යන්නේ කොහොමද?", a: "හඳට යන්න නම් ඉතාම බලගතු රොකට් එකක් (Rocket) සහ අභ්‍යවකාශ යානයක් (Spacecraft) අවශ්‍ය වෙනවා! පෘථිවියේ තියෙන ගුරුත්වාකර්ෂණයෙන් මිදිලා අභ්‍යවකාශයට යන්න පැයට කිලෝමීටර් 40,000ක පමණ වේගයක් ඕනේ. අභ්‍යවකාශගාමීන් විශේෂ ඇඳුම් (Spacesuits) ඇඳගෙන දින 3ක් පමණ ගමන් කරලයි හඳට ළඟා වෙන්නේ!" },
+      { t: "🦁 සතුන් ගැන", q: "සතුන් කතා කරන්නේ කොහොමද?", a: "සතුන්ට අපිට වගේ වචන කතා කරන්න බැරි වුණාට, උන් සද්ද, ශරීරයේ චලනයන් සහ සුවඳ මඟින් අදහස් හුවමාරු කරගන්නවා. උදාහරණයක් විදියට බල්ලන් වලිගය වනන්නේ සතුටු හිතුණාමයි. කුරුල්ලන් ලස්සනට සින්දු කියන්නේ අනෙක් කුරුල්ලන්ට පණිවිඩ දෙන්නයි!" },
+      { t: "🌳 ගස් වැල් අපිට උදව් වෙන්නේ ඇයි?", q: "ගස් වැල් අපිට උදව් වෙන්නේ ඇයි?", a: "ගස් වැල් තමයි අපිට හුස්ම ගන්න අවශ්‍ය කරන පිරිසිදු ඔක්සිජන් (Oxygen) වායුව හදලා දෙන්නේ. ඒ වගේම උන් හිරු එළියෙන් තමන්ගේ ආහාර හදාගෙන අපිට රසවත් පලතුරු සහ එළවළු ලබා දෙනවා. ඒ නිසා අපි හැමෝම පුංචි පැළයක් හරි හිටවන්න ඕනේ!" },
+      { t: "🌧️ වැස්ස ලැබෙන්නේ කොහොමද?", q: "වැස්ස ලැබෙන්නේ කොහොමද?", a: "හිරුගේ රස්නයට මුහුදු, ගංගාවල වතුර රත්වෙලා වාෂ්ප (Water Vapour) විදියට අහසට යනවා. අහසේදී ඒ වාෂ්ප එකතු වෙලා වලාකුළු හැදෙනවා. වලාකුළු සීතල වුණාම ඒ වාෂ්ප බිංදු වැහි බිංදු බවට පත්වෙලා ආයෙත් පොළොවට වැටෙනවා. මේකට තමයි 'ජල චක්‍රය' කියන්නේ!" }
     ];
 
-    // Load default cartoon face on canvas
-    function initAvatar() {
-      const c = document.getElementById('photoCanvas');
-      const ctx = c.getContext('2d');
-      ctx.clearRect(0, 0, 90, 90);
-      
-      // 3D Soft Ball
-      let grad = ctx.createRadialGradient(40, 35, 5, 45, 45, 40);
-      grad.addColorStop(0, '#fef08a');
-      grad.addColorStop(0.6, '#fb923c');
-      grad.addColorStop(1, '#ea580c');
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(45, 45, 38, 0, Math.PI * 2);
-      ctx.fill();
+    // Registered Kid Pen Pals Store
+    let kidsBoard = JSON.parse(localStorage.getItem('penpal_kids_list')) || [
+      { name: "දිනුක තිසර", age: "අවු 10", gender: "පුතෙක්", phone: "0712345678", interests: "ක්‍රිකට්, අභ්‍යවකාශය", avatarSeed: "Dinuka" },
+      { name: "සෙනුරි නිම්නදි", age: "අවු 9", gender: "දුවක්", phone: "0778901234", interests: "චිත්‍ර ඇඳීම, බළලුන්", avatarSeed: "Senuri" },
+      { name: "කවිඳු මල්ෂාන්", age: "අවු 12", gender: "පුතෙක්", phone: "0755678901", interests: "විද්‍යාව, පරිගණක", avatarSeed: "Kavindu" }
+    ];
 
-      // Eyes & Smile
-      ctx.fillStyle = '#fff';
+    let currentSelectedFriend = null;
+
+    // View Switching
+    function changeView(view) {
+      if (view === 'ai-pal') {
+        document.getElementById('viewAiPal').classList.remove('hidden');
+        document.getElementById('viewKidNetwork').classList.add('hidden');
+        document.getElementById('btnTabAi').classList.add('active');
+        document.getElementById('btnTabNet').classList.remove('active');
+      } else {
+        document.getElementById('viewAiPal').classList.add('hidden');
+        document.getElementById('viewKidNetwork').classList.remove('hidden');
+        document.getElementById('btnTabNet').classList.add('active');
+        document.getElementById('btnTabAi').classList.remove('active');
+        renderFriendsGrid();
+      }
+    }
+
+    // Default Avatar Drawing
+    function initCanvasAvatar() {
+      const c = document.getElementById('userAvatarCanvas');
+      const ctx = c.getContext('2d');
+      ctx.clearRect(0,0,80,80);
+      let g = ctx.createRadialGradient(35, 30, 5, 40, 40, 35);
+      g.addColorStop(0, '#fef08a');
+      g.addColorStop(0.6, '#fb923c');
+      g.addColorStop(1, '#ea580c');
+      ctx.fillStyle = g;
       ctx.beginPath();
-      ctx.arc(33, 40, 6, 0, Math.PI * 2);
-      ctx.arc(57, 40, 6, 0, Math.PI * 2);
+      ctx.arc(40, 40, 34, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.fillStyle = '#1e293b';
       ctx.beginPath();
-      ctx.arc(33, 40, 3, 0, Math.PI * 2);
-      ctx.arc(57, 40, 3, 0, Math.PI * 2);
+      ctx.arc(30, 36, 4, 0, Math.PI * 2);
+      ctx.arc(50, 36, 4, 0, Math.PI * 2);
       ctx.fill();
 
       ctx.strokeStyle = '#1e293b';
       ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.arc(45, 52, 12, 0.1 * Math.PI, 0.9 * Math.PI, false);
+      ctx.arc(40, 46, 10, 0.1 * Math.PI, 0.9 * Math.PI, false);
       ctx.stroke();
     }
 
-    // Convert real photo into 3D Cartoon Clay style on canvas
-    function loadPhoto(e) {
+    // Photo Upload to Cartoon
+    function handlePhotoUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(evt) {
+      const r = new FileReader();
+      r.onload = function(evt) {
         const img = new Image();
         img.onload = function() {
-          const c = document.getElementById('photoCanvas');
+          const c = document.getElementById('userAvatarCanvas');
           const ctx = c.getContext('2d');
-          ctx.clearRect(0, 0, 90, 90);
-
-          const size = Math.min(img.width, img.height);
-          ctx.drawImage(img, (img.width-size)/2, (img.height-size)/2, size, size, 0, 0, 90, 90);
-
-          // 3D Lighting & Cartoon Shade
-          const overlay = ctx.createRadialGradient(30, 30, 10, 45, 45, 50);
-          overlay.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
-          overlay.addColorStop(0.7, 'rgba(255, 255, 255, 0)');
-          overlay.addColorStop(1, 'rgba(0, 0, 0, 0.35)');
+          ctx.clearRect(0,0,80,80);
+          const sz = Math.min(img.width, img.height);
+          ctx.drawImage(img, (img.width-sz)/2, (img.height-sz)/2, sz, sz, 0, 0, 80, 80);
+          
+          const overlay = ctx.createRadialGradient(25, 25, 10, 40, 40, 45);
+          overlay.addColorStop(0, 'rgba(255,255,255,0.4)');
+          overlay.addColorStop(1, 'rgba(0,0,0,0.3)');
           ctx.fillStyle = overlay;
-          ctx.fillRect(0, 0, 90, 90);
+          ctx.fillRect(0,0,80,80);
+          localStorage.setItem('my_saved_avatar', c.toDataURL());
         };
         img.src = evt.target.result;
       };
-      reader.readAsDataURL(file);
+      r.readAsDataURL(file);
     }
 
-    // Render topics buttons with big touch targets
+    // Render Quick Topics
     function renderTopics() {
-      const cont = document.getElementById('topicsContainer');
+      const cont = document.getElementById('quickTopics');
       cont.innerHTML = '';
-      topicsList.forEach(t => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = "px-3.5 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-xs rounded-2xl active:scale-95 transition shadow-sm border border-amber-300";
-        btn.innerText = t;
-        btn.onclick = () => {
-          document.getElementById('topicInput').value = t;
-          document.getElementById('letterText').value = t + " ගැන මට කියන්න:";
+      topicQuestions.forEach(item => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = "px-2.5 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-[11px] rounded-xl border border-amber-300";
+        b.innerText = item.t;
+        b.onclick = () => {
+          document.getElementById('inputTopic').value = item.q;
+          document.getElementById('inputText').value = `මිතුරේ, ${item.q} ගැන මට කියලා දෙන්න!`;
         };
-        cont.appendChild(btn);
+        cont.appendChild(b);
       });
     }
 
-    // Handle Send & Auto WhatsApp
-    function handleSend() {
-      const name = document.getElementById('kidName').value.trim();
-      const phone = document.getElementById('kidPhone').value.trim();
-      const gender = document.getElementById('kidGender').value;
-      const age = document.getElementById('kidAge').value;
-      const topic = document.getElementById('topicInput').value.trim() || "සාමාන්‍ය දැනුම";
-      const letter = document.getElementById('letterText').value.trim();
+    // Send to AI & WhatsApp
+    function handleSendToAI() {
+      const name = document.getElementById('inputName').value.trim();
+      const phone = document.getElementById('inputPhone').value.trim();
+      const gender = document.getElementById('inputGender').value;
+      const age = document.getElementById('inputAge').value;
+      const topic = document.getElementById('inputTopic').value.trim();
+      const text = document.getElementById('inputText').value.trim();
 
-      if (!name) {
-        alert("කරුණාකර ඔයාගේ නම ඇතුළත් කරන්න! 😊");
-        return;
-      }
-      if (!phone) {
-        alert("කරුණාකර දෙමාපියන්ගේ දුරකථන/WhatsApp අංකය දාන්න! 📱");
-        return;
-      }
-      if (!letter) {
-        alert("කරුණාකර ලියුමක් හෝ ප්‍රශ්නයක් ලියන්න! ✍️");
-        return;
-      }
+      if (!name) return alert("කරුණාකර ඔයාගේ නම ලියන්න! 😊");
+      if (!phone) return alert("කරුණාකර දෙමාපියන්ගේ WhatsApp අංකය දාන්න! 📱");
+      if (!text && !topic) return alert("කරුණාකර ප්‍රශ්නයක් හෝ ලියුමක් ලියන්න! ✍️");
 
-      // 1. Send WhatsApp directly to Admin (0784693750)
-      const msg = `🔔 *පුංචි පෑනේ මිතුරා වෙතින් නව ලිපියක්!*\n\n👦 නම: ${name}\n📞 දුරකථනය: ${phone}\n⚧️ ස්ත්‍රී/පුරුෂ: ${gender}\n🎂 වයස: ${age}\n📌 මාතෘකාව: ${topic}\n\n📝 ලිපිය: "${letter}"`;
-      const waUrl = `https://api.whatsapp.com/send?phone=94784693750&text=${encodeURIComponent(msg)}`;
+      // Save user to local board automatically
+      registerMeToBoard(true);
+
+      // WhatsApp Notification to Admin (0784693750)
+      const waMsg = `🔔 *පුංචි පෑනේ මිතුරා - නව ප්‍රශ්නයක්!*\n\n👦 නම: ${name}\n📞 දුරකථනය: ${phone}\n⚧️ ස්ත්‍රී/පුරුෂ: ${gender}\n🎂 වයස: ${age}\n📌 මාතෘකාව: ${topic || 'නැත'}\n📝 ලියූ දේ: "${text}"`;
+      const waUrl = `https://api.whatsapp.com/send?phone=94784693750&text=${encodeURIComponent(waMsg)}`;
       window.open(waUrl, '_blank');
 
-      // 2. Generate Warm Educational Response
-      document.getElementById('replyNameHeader').innerText = `ආදරණීය ${name} වෙත (${age})`;
-      document.getElementById('replyBody').innerText = `ආයුබෝවන් ${name} යාළුවේ,\n\nඔයා මට එවපු ලියුම කියවලා මට හරිම සතුටු හිතුණා! "${topic}" ගැන ඔයා අහපු කරුණ හරිම ලස්සනයි.\n\nස්වභාවධර්මය සහ අපේ ලෝකය හරිම පුදුමාකාරයි. ඔයා පාසලේ වැඩත් හොඳින් කරලා, හැමදාම අලුත් දේවල් ඉගෙන ගන්න උනන්දු වෙන්න. මම හැමදාම ඔයාගේ හොඳ පෑනේ මිතුරා විදියට ඔයාට උදව් කරනවා!\n\nආදරයෙන්,\nඔයාගේ 3D පෑනේ මිතුරා 🕊️`;
+      // Generate Accurate Answer based on Question
+      let matched = topicQuestions.find(i => (topic && topic.includes(i.q)) || (text && text.includes(i.q)));
+      let answerBody = "";
 
-      document.getElementById('replyWrapper').classList.remove('hidden');
-      document.getElementById('replyWrapper').scrollIntoView({ behavior: 'smooth' });
+      if (matched) {
+        answerBody = matched.a;
+      } else {
+        answerBody = `ඔයා අහපු "${topic || 'මේ කාරණය'}" ගැන මම ඔයාට සරලව කියලා දෙන්නම්!\n\nඅපේ ලෝකය සහ ස්වභාවධර්මයේ තියෙන හැම දෙයක් පිටුපසම ලස්සන විද්‍යාත්මක හෝ ස්වභාවික හේතුවක් තියෙනවා. ඔයා මේ වගේ දේවල් ගැන කුතුහලයෙන් හොයලා බලන එකට මම ගොඩක් සතුටුයි!\n\nඔයාට මේ ගැන තව මොනවද දැනගන්න ඕනේ? මට ආයෙත් ලියන්න!`;
+      }
+
+      document.getElementById('replyHeader').innerText = `ආදරණීය ${name} වෙත පෑනේ මිතුරාගෙන් (${age})`;
+      document.getElementById('replyAnswer').innerText = `ආයුබෝවන් ${name} යාළුවේ,\n\n${answerBody}\n\nආදරයෙන්,\nඔයාගේ පෑනේ මිතුරා 🕊️`;
+      document.getElementById('aiReplyBox').classList.remove('hidden');
+      document.getElementById('aiReplyBox').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Voice Read
-    function readAloud() {
-      const text = document.getElementById('replyBody').innerText;
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'si-LK';
-      u.rate = 0.9;
-      window.speechSynthesis.speak(u);
+    // Render Friends Grid
+    function renderFriendsGrid() {
+      const cont = document.getElementById('friendCardsGrid');
+      cont.innerHTML = '';
+      kidsBoard.forEach((k, idx) => {
+        const item = document.createElement('div');
+        item.className = "p-3 bg-amber-50/60 rounded-2xl border-2 border-amber-200 flex items-center justify-between";
+        item.innerHTML = `
+          <div class="flex items-center gap-3">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=${k.avatarSeed || k.name}" class="w-12 h-12 rounded-xl bg-white border border-orange-300 shadow-sm">
+            <div class="text-left">
+              <h4 class="text-xs font-black text-slate-800">${k.name}</h4>
+              <p class="text-[11px] text-orange-600 font-bold">${k.gender} • ${k.age}</p>
+              <p class="text-[10px] text-slate-500">🎨 විනෝදාංශ: ${k.interests || 'චිත්‍ර'}</p>
+            </div>
+          </div>
+          <button onclick="openFriendModal(${idx})" class="px-3 py-2 bg-orange-500 text-white font-bold text-xs rounded-xl shadow active:scale-95">
+            මිතුරු වෙන්න 💌
+          </button>
+        `;
+        cont.appendChild(item);
+      });
     }
 
-    // Admin Access
-    function openAdmin() {
-      const p = prompt("ඇඩ්මින් මුරපදය ගසන්න:");
-      if (p === "admin123") {
-        const newTopic = prompt("අලුත් මාතෘකාවක් එකතු කරන්න (උදා: ගස් වැල් ගැන):");
-        if (newTopic) {
-          topicsList.unshift(newTopic);
-          renderTopics();
-          alert("මාතෘකාව සාර්ථකව එකතු විය!");
-        }
-      } else if (p !== null) {
-        alert("මුරපදය වැරදියි!");
+    // Register User to Friends Board
+    function registerMeToBoard(silent = false) {
+      const name = document.getElementById('inputName').value.trim();
+      const phone = document.getElementById('inputPhone').value.trim();
+      const gender = document.getElementById('inputGender').value;
+      const age = document.getElementById('inputAge').value;
+      const interests = document.getElementById('inputInterests').value.trim() || "චිත්‍ර ඇඳීම";
+
+      if (!name || !phone) {
+        if (!silent) alert("කරුණාකර ඔබගේ නම සහ දෙමාපියන්ගේ දුරකථන අංකය මුලින්ම ඇතුළත් කරන්න!");
+        return;
+      }
+
+      const exists = kidsBoard.find(k => k.name.toLowerCase() === name.toLowerCase());
+      if (!exists) {
+        kidsBoard.unshift({ name, age, gender, phone, interests, avatarSeed: name });
+        localStorage.setItem('penpal_kids_list', JSON.stringify(kidsBoard));
+        renderFriendsGrid();
+        if (!silent) alert("ඔබව සාර්ථකව පෑනේ මිතුරු පුවරුවට එකතු කරන ලදී! 🎉");
       }
     }
 
-    window.onload = () => {
-      initAvatar();
-      renderTopics();
-    };
-  </script>
-</body>
-</html>
+    // Friend Connection Modal
+    function openFriendModal(idx) {
+      currentSelectedFriend = kidsBoard[idx];
+      document.getElementById('friendTargetInfo').innerText = `මිතුරා: ${currentSelectedFriend.name} (${currentSelectedFriend.age}) - ${currentSelectedFriend.interests}`;
+      docume
